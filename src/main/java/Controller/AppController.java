@@ -37,11 +37,7 @@ public @ResponseBody HashMap<String,Object> apps (){
     	hm.put("id", request.getParameter("id"));
     	System.out.println("hgdugc");
     		return hm;
-    		// Git Commit
-    		//New Changes
-	    //Change From Remote
-    		//Handle
-                //NetBeans
+    		
     		
     		
     	}
