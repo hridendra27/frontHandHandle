@@ -22,7 +22,7 @@
   </script>
   <body>
     <form class="work" action="http://localhost:8080/frontHandHandle/tasks" method="post">
-      <input type="text" id="id" name="data1" value="data1">
+      <input type="text" id="data1" name="data1" value="data1">
       <button type="submit" name="button">cdsc</button>
     <button type="button" name="button" onclick="UserAction()">Submit</button>
     <button type="button" onclick ="/checkl"> HttpWALA</button>

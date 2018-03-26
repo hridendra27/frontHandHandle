@@ -22,8 +22,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //@CrossOrigin(origins = "http://localhost:8080")
 public class AppController {
     @RequestMapping(value="/tasks",method = RequestMethod.POST,headers="Accept=application/json")	
-public @ResponseBody HashMap<String,Object> apps (){
-	HashMap <String,Object> hm =new HashMap<String,Object>();
+public @ResponseBody HashMap<String,Object> apps (@PathVariable("id")int id){
+	HashMap <String,Object> hm =new HashMap<String,Object>( );
 	hm.put("Hello", "World");
 	hm.put("id", "cu");
 		return hm;
@@ -34,15 +34,12 @@ public @ResponseBody HashMap<String,Object> apps (){
     	HashMap <String,Object> hm =new HashMap<String,Object>();
     	
     	hm.put("Hello", "World");
-    	hm.put("id", request.getParameter("id"));
-    	System.out.println("hgdugc");
+    	hm.put("id", request.getParameter("data1"));
+    	System.out.println(request);
+    	System.out.println(hm);
+
     		return hm;
-    		// Git Commit
-    		//New Changes
-	    //Change From Remote
-    		//Handle
-                //NetBeans
-    		
+    	
     		
     	}
 }
