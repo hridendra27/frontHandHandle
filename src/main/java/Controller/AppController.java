@@ -39,8 +39,8 @@ public @ResponseBody HashMap<String,Object> apps (){
     		return hm;
     		// Git Commit
     		//New Changes
-    		
 	    //Change From Remote
+    		//Handle
     		
     		
     	}
