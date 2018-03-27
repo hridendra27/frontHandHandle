@@ -29,10 +29,17 @@ public class DataServices {
 		    hm.put("User_Name", e.getUsername());
 		  return	dao.saveEmployee(hm);	
 			//return null;
-		
-		
-		
+	
 	}
+		//Retrive Data Service 
+		public HashMap<String,Object> /* ArrayList<String>*/ retriveDataService (DataModel e) {
+			HashMap <String,Object> hm =new  HashMap <String,Object> ();
+		    hm.put("USER_NAME", e.getUsername());
+		    hm.put("PASSWORD", e.getPassword());
+			//ArrayList<String> m1= new  ArrayList <String>(dao.retriveUserNameIdAndPassword(hm));
+		    HashMap<String,Object> m1=new HashMap<String,Object>(dao.retriveUserNameIdAndPassword(hm));
+			return m1;
+		}
 	
 	
 }

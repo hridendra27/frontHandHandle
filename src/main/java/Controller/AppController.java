@@ -1,10 +1,12 @@
 package Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +22,7 @@ import Services.DataServices;
 //@CrossOrigin(origins="*")
 @RestController
 @EnableWebMvc
-
+@EnableAsync
 public class AppController {
 	
 	DataServices cs=new DataServices();
@@ -50,8 +52,10 @@ public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  
     		
     		
     	}
+    
+    
     @RequestMapping(value="/datamodel",method = RequestMethod.POST,headers="Accept=application/json")	
-public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel dm){
+    public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel dm){
     	HashMap<String,Object> hash=new HashMap<String, Object>();
 		
 		//Random UserName
@@ -85,6 +89,36 @@ public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel
 			}
 	    	return hash;
 	}
+    
+    
+ // Retrive Data By UserName
+ 	@RequestMapping (value="/retrivebyusername", method=RequestMethod.POST, headers="Accept=application/json")	
+ 	public HashMap<String,Object> retriveDataByUserName (@RequestBody DataModel usermodel){
+ 		try {
+ 			//ArrayList<String> s= cs. retriveDataService (usermodel);
+ 	 		HashMap<String,Object> hash=new HashMap<String, Object>(cs. retriveDataService (usermodel));
+
+ 			return hash;
+ 			/*if (s.isEmpty()) {
+ 				hash.put("Status","UnSuccesful");
+ 				hash.put("Message",ValidationData.UNNF);
+ 				hash.remove("Data", null);
+ 					
+ 			}else {
+ 				//hash.put("Status","success");
+ 				//hash.put("Message","Your data");
+ 				hash.put("Data", s);
+ 			}*/
+ 		} catch (Exception e) {
+ 			System.out.println(e);
+ 			e.printStackTrace();
+ 			return null;
+ 		}
+ 		   
+ 	 }
+    
+    
+    
 }
 
 
