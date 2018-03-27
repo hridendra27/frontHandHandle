@@ -47,6 +47,8 @@ public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  
     		return hm;
     	
     		
+    		
+    		
     	}
     @RequestMapping(value="/datamodel",method = RequestMethod.POST,headers="Accept=application/json")	
 public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel dm){
