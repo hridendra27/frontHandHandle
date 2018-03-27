@@ -96,7 +96,7 @@
               <br><br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" placeholder="Enter lastname" style="width:450px;">
               <br><br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" placeholder="Enter mobileno" style="width:450px;">
               <br><br>Address  <br>  <textarea class="form-control" rows="3" name="address"id="address" style="width:450px;"></textarea>
-              <br><br>           <input type="button" onclick="dataModel()"> Submit </input>
+              <br><br>  <input type="button" onclick="dataModel()" value ="Click"> Click </input>
             </form>
       </div>
     </div>

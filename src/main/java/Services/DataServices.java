@@ -2,7 +2,8 @@ package Services;
 
 	import java.util.*;
 
-	import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 	import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 	import Dao.DataDao;
@@ -10,9 +11,11 @@ package Services;
 
 public class DataServices {
 
-	//private ApplicationContext ctx= new ClassPathXmlApplicationContext("application-config.xml");
-		//DataDao dao =(DataDao)ctx.getBean("dao");
-		
+	private ApplicationContext ctx= new ClassPathXmlApplicationContext("ApplicationContext.xml");
+	
+		DataDao dao =(DataDao)ctx.getBean("dao");
+//		@Autowired
+//		DataDao dao;
 		// Registration Service
 		public String addDataService(DataModel e) {
 			
@@ -24,8 +27,8 @@ public class DataServices {
 		    hm.put("MOBILE", e.getMobileno());
 		    hm.put("DOB", e.getDob());
 		    hm.put("User_Name", e.getUsername());
-		  // return	dao.saveEmployee(hm);	
-			return null;
+		  return	dao.saveEmployee(hm);	
+			//return null;
 		
 		
 		
