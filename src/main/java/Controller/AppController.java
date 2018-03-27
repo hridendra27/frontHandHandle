@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-//import Lib_Query.*;
+import Lib_Query.*;
 import Model.DataModel;
-//import Services.CurdServices;
+import Services.DataServices;
 
 //@CrossOrigin(origins="*")
 @RestController
@@ -23,7 +23,7 @@ import Model.DataModel;
 
 public class AppController {
 	
-	//CurdServices cs=new CurdServices();
+	DataServices cs=new DataServices();
 	
     @RequestMapping(value="/tasks",method = RequestMethod.POST,headers="Accept=application/json")	
 public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  s1,@RequestParam("data2")String  s2){
@@ -53,7 +53,7 @@ public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  
     @RequestMapping(value="/datamodel",method = RequestMethod.POST,headers="Accept=application/json")	
 public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel dm){
     	HashMap<String,Object> hash=new HashMap<String, Object>();
-		/*
+		
 		//Random UserName
     	dm.setUsername(ValidationData.userNameGenration(dm.getFirstname(),dm.getLastname()) );
 		//Password Validation 
@@ -82,7 +82,7 @@ public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel
 			} catch (Exception e) {
 				System.out.println(e);			
 				e.printStackTrace();
-			}*/
+			}
 	    	return hash;
 	}
 }
