@@ -163,8 +163,39 @@ public @ResponseBody HashMap<String,Object> apps (){
  			}
  			return hash;
  		}
+ 		//Retrive User All
  		
+ 		@RequestMapping (value="/retriveall", method=RequestMethod.POST,headers="Accept=application/json")	  
+ 		public ArrayList<String> retriveall (){
+ 			ArrayList<String> al=new ArrayList<String>(cs.dataRetrivalUser());
+ 			return al;
+ 		}
     
+ 		//Session Result Set 
+ 		@RequestMapping("/sessionset")
+ 		public ArrayList<String> sessionSet (){
+ 			HashMap<String,Object> hash=new HashMap<String, Object>();
+ 			ArrayList<String> al=new ArrayList<String>();
+ 			try {
+ 				al = cs.sessionResultSet();
+ 				if (al.isEmpty()) {
+ 					hash.put("Status","UnSuccesful");
+ 					hash.put("Message",ValidationData.ERROR);
+ 					hash.remove("Data", null);
+ 						
+ 				}else {
+ 					hash.put("Status","success");
+ 					hash.put("Message","Your data");
+ 					hash.put("Data", al);
+ 				}
+ 				
+ 			} catch (Exception e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+ 			System.out.println(al);
+ 			return al;
+ 		}
 }
 
 

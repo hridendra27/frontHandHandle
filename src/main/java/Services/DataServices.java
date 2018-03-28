@@ -74,9 +74,19 @@ public class DataServices {
 	        hm1.remove("User_Name");  
 	    	return dao.updateUserByUserName(hm1,username); 
 	       
-		
 		}
 		
-	
-	
+		
+		// Session Result Set
+		public ArrayList <String> sessionResultSet () {
+			ArrayList<String> m1= new  ArrayList <String> (dao.sessionDataRetrival());
+			return m1;
+		}
+		
+		// Data Retrival All User 
+		
+		public ArrayList <String> dataRetrivalUser () {
+			ArrayList<String> m1= new  ArrayList <String> (dao.userDataRetrivalAll());
+			return m1;
+		}
 }

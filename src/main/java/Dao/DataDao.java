@@ -73,6 +73,26 @@ public int updateUserByUserName (HashMap<String ,Object> param , String username
 	}
 	return 0;
 }
+public  List sessionDataRetrival() {
+	try {
+		String sql= retrivequery.sessionAllDataRetrival("SESSION");
+		return  jdbcTemplate.queryForList(sql);
+	} catch (DataAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
+public  List userDataRetrivalAll() {
+	try {
+		String sql= retrivequery.allDataRetrivalUsingTableNameWithNoConstraint("studentmain");
+		return  jdbcTemplate.queryForList(sql);
+	} catch (DataAccessException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
 
 
 }

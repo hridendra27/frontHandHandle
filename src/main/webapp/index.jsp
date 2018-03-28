@@ -29,7 +29,7 @@
        position: relative;
        height: 100%;
      }
-     .col-xs-5{
+     .col-xs-3{
        overflow: Scroll;
        position: absolute;
        top: 0px;
@@ -43,7 +43,7 @@
        color: white;
        background-color: black;
      }
-     .col-xs-7{
+     .col-xs-9{
        overflow: Scroll;
        position: absolute;
        top: 0px;
@@ -189,16 +189,40 @@ function deleteUser(){
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
 		
+}
+
+function deleteUsertable(username , password){
+	  var myJSON=null;
+	  var html="";
+	  var data = JSON.stringify({
+		  "password": ""+password+"",
+		  "username": ""+username+""  		
+		  });
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+		    dataofuser=this.responseText;
+		    var myObj = JSON.parse(this.responseText);
+		  // myJSON= JSON.stringify(this.responseText);
+		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
+		  } 
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/delete");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send(data);
+		
 	  
 	  
 }
+
+
 function udatedatainform(){
-	 
-	
-	        
-	    
-	
-	
 	var myJSON=null;
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
@@ -213,7 +237,7 @@ function udatedatainform(){
 		    var myObj = JSON.parse(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
 		    if (myObj.Status==="UnSuccesful"){
-		    	html="<div><h6 style="+"color:Blue;"+"> Sorry!... For User <p style="+"color:red;"+">"+$("#username").val()+"</p> Data DoesNot Found "+myObj.Status+" </h6> </div>";
+		    	html="<div><h3 style="+"color:Blue;"+"> Sorry!... For User <span style="+"color:red;"+">"+$("#username").val()+"</span> Data DoesNot Found "+myObj.Status+" </h3> </div>";
 		    	$("#canvas1").append(html);
 			}else{
 				$("#formdisplay").show();
@@ -268,9 +292,6 @@ function updatedata(){
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-	  
-	
-	
 	
 }
 function hidefrom(){
@@ -278,6 +299,37 @@ function hidefrom(){
 }
  
  
+ function retrivedataall(){
+	 var dataofuser="";
+	 html="";
+	 var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+			document.getElementById("canvas1").innerHTML="";
+
+		    dataofuser=this.responseText;
+		    var j = JSON.parse(dataofuser);
+ html="<div class="+"container"+"><h2>AllUserData</h2><hr><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th></tr></thead><tbody>";
+
+		    for (var i in j){
+		    	console.log (j[i].EMAIL);
+html+=" <tr><td>"+j[i].FIRST_NAME+"</td><td>"+j[i].LAST_NAME+"</td><td>"+j[i].EMAIL+"@</td><td>"+j[i].S_ID+"</td><td>"+j[i].User_Name+"</td><td>"+j[i].DOB+"</td><td>"+j[i].MOBILE+"</td><td>"+j[i].Address+"</td>";
+html+="<td><input type="+"button"+" class="+"btn btn-danger"+"style ="+"float: right"+" value="+"DELETE"+" onClick="+"deleteUsertable("+j[i].User_Name+","+j[i].PASSWORD+")"+"></td></tr> ";    
+		    }
+	    	$("#canvas1").append(html);
+		  }
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/retriveall");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send();
+	 
+	 
+ }
  
   
   
@@ -298,23 +350,24 @@ function hidefrom(){
   <div class="container-fulid" >
   <center>  <h1 id ="helo"> Hello Curd Operation </h1> </center>
     <div class="row">
-      <div class="col-xs-5" style="background-color:#9acfea">
+      <div class="col-xs-3" style="background-color:#9acfea">
               <center>  <h3 data-value="form"class="tool button" id="Msgpass">Insert From </h3></center><hr>
              <form  class="form-horizontal" method="post">
-              Email<br><input type="email" class="form-control" name="email" id="email" placeholder="We'll never share your email with anyone else" style="width:450px;">
-                <br>Password<br><input type="password" class="form-control" name="password" id="password" placeholder="Enter password" style="width:450px;">
-                <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" style="width:450px">
-             	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" placeholder="Enter firstname" style="width:450px;">
-                 <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" placeholder="Enter lastname" style="width:450px;">
-                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" placeholder="Enter mobileno" style="width:450px;">
-                 <br>Address  <br>  <textarea class="form-control" rows="3" name="address"id="address" style="width:450px;"></textarea>
+              Email<br><input type="email" class="form-control" name="email" id="email" placeholder="We'll never share your email with anyone else" style="width:350px;">
+                <br>Password<br><input type="password" class="form-control" name="password" id="password" placeholder="Enter password" style="width:350px;">
+                <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" style="width:350px">
+             	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" placeholder="Enter firstname" style="width:350px;">
+                 <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" placeholder="Enter lastname" style="width:350px;">
+                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" placeholder="Enter mobileno" style="width:350px;">
+                 <br>Address  <br>  <textarea class="form-control" rows="3" name="address"id="address" style="width:350px;"></textarea>
                  <br>  <input type="button" onclick="dataModel()" value ="Register"> </input>
                </form>
       </div>
-      <div class="col-xs-7" id="canvas" style="background-color:lightslategrey" >
+      <div class="col-xs-9" id="canvas" style="background-color:lightslategrey" >
         <center>  <h3 data-value="form"class="tool button">Retrive BY User name and password </h3></center><hr>
   <input type="button" class="btn btn-danger"style ="float: right" value="DELETE" onClick="deleteUser()">
   <input type="button" class="btn btn-primary"style ="float: right" id="updatebuttonshow" value="UPDATE" onClick="udatedatainform()">
+    <input type="button" class="btn btn-info"style ="float: right" value="ALLDATA" onClick="retrivedataall()">
   
         
         <form  class="form-horizontal" method="post">
@@ -327,6 +380,7 @@ function hidefrom(){
           <div id="canvas1"> 
           
           </div>
+          
           <div id="formdisplay" style="display:none">
             <center>  <h3 data-value="form"class="tool button" id="Msgpass">Update From </h3></center><hr>
              <form  class="form-horizontal" method="post">

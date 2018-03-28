@@ -37,4 +37,10 @@ public class RetriveQuery {
 		return " SELECT S_ROLLNO FROM "+tablename+";";
 
 	}
+	public String allDataRetrivalUsingTableNameWithNoConstraint (String tablename)
+	{
+		return "SELECT * FROM "+tablename+" ;";
+
+	}
+	
 }
