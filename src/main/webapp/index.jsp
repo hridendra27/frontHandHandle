@@ -30,6 +30,7 @@
        height: 100%;
      }
      .col-xs-5{
+       overflow: Scroll;
        position: absolute;
        top: 0px;
        bottom: 0px;
@@ -43,7 +44,7 @@
        background-color: black;
      }
      .col-xs-7{
-       overflow: hidden;
+       overflow: Scroll;
        position: absolute;
        top: 0px;
        bottom: 0px;
@@ -51,14 +52,11 @@
        margin: 1px;
 
      }
-     .btn{
-        height:80px;
-        width: 350px;
-        padding: 4px;
-
-     }
+     
   </style>
   </head>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
 
   function UserAction() {
@@ -86,12 +84,10 @@
 
 }
   function dataModel(){
-	  
 	  var data = JSON.stringify({
 		  "email": ""+document.getElementById('email').value+"",
 		  "password": ""+document.getElementById('password').value+"",
 		  "dob": ""+document.getElementById('dob').value+"",
-		  "rollno": ""+document.getElementById('rollno').value+"",
 		  "firstname": ""+document.getElementById('firstname').value+"",
 		  "lastname": ""+document.getElementById('lastname').value+"",
 		  "address": ""+document.getElementById('address').value+"",  
@@ -105,6 +101,12 @@
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
 		    console.log(this.responseText);
+		    var myObj = JSON.parse(this.responseText);
+			if (myObj.Message==="You are successfully Resgistered"){
+			document.getElementById("Msgpass").innerHTML="Thanks for Register! <br> <center><p>Your User Name:"+myObj.USER_NAME+" </p> </center>";
+		  }else{
+			  document.getElementById("Msgpass").innerHTML="Sorry You are not registered!<br> "  ;
+		  }
 		  }
 		});
 
@@ -117,7 +119,53 @@
   }
 function retriveDataByUserName(){
 	  var dataofuser="";
-	  var myJSON=null
+	  var myJSON=null;
+	  var html="";
+	  var canvas=$("#canvas1");
+	  var data = JSON.stringify({
+		  "password": ""+document.getElementById('passwordretrive').value+"",
+		  "username": ""+document.getElementById('username').value+""  
+		});
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+		    dataofuser=this.responseText;
+		    
+		    var myObj = JSON.parse(this.responseText);
+		  // myJSON= JSON.stringify(this.responseText);
+			console.log(myObj.S_ID);
+			document.getElementById("canvas1").innerHTML="";
+			if (myObj.Status==="UnSuccesful"){
+				html="<div><h2 style="+"color:red;"+"> Sorry!... Something Gone Wrong User Id And Password Doesn't Match  "+myObj.Status+" </h2> </div>";
+				
+			}else{
+
+html="<div class="+"container"+"><h2>Hi!!!......."+myObj.FIRST_NAME+"</h2><p>Your Details...</p><table class="+"table table-condensed"+">";
+html=html+"<thead><tr><th>Student_Id</th><th>"+myObj.S_ID+"</th></tr></thead><tbody><tr><td>User_Name</td><td>"+myObj.User_Name+"</td></tr><tr><td>FirstName</td><td>"+myObj.FIRST_NAME+"</td></tr><tr><td>LastName</td>";
+html=html+"<td>"+myObj.LAST_NAME+"</td></tr><tr><td>EMAIL</td><td>"+myObj.EMAIL+"</td></tr><tr><td>ADDRESS</td><td>"+myObj.Address+"</td></tr><tr><td>DOB</td><td>"+myObj.DOB+"</td></tr><tr><td>MOBILE</td><td>"+myObj.MOBILE+"</td></tr></tbody></table></div>";
+			}	    
+
+canvas.append(html);
+		  
+		  } 
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send(data);
+
+	  
+	  
+  }
+ 
+function deleteUser(){
+	  var myJSON=null;
+	  var html="";
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
 		  "username": ""+document.getElementById('username').value+""  
@@ -132,27 +180,105 @@ function retriveDataByUserName(){
 		    dataofuser=this.responseText;
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
-			console.log(myObj.S_ID);
-			document.getElementById("demo").innerHTML="<div><tableborder="+"1"+"><tr><th>Student_Id</th><th>"+myObj.S_ID+"</th></tr><tr><th>UserName</th><th>"+myObj.User_Name+"</th></tr></table></div>";
-		  }
-
-		  
+		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
+		  } 
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/delete");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
 		
 	  
 	  
-  }
-  function insertfrom(){
+}
+function udatedatainform(){
+	 
+	
+	        
+	    
+	
+	
+	var myJSON=null;
+	  var data = JSON.stringify({
+		  "password": ""+document.getElementById('passwordretrive').value+"",
+		  "username": ""+document.getElementById('username').value+""  
+		});
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+		    var myObj = JSON.parse(this.responseText);
+			document.getElementById("canvas1").innerHTML="";
+		    if (myObj.Status==="UnSuccesful"){
+		    	html="<div><h6 style="+"color:Blue;"+"> Sorry!... For User <p style="+"color:red;"+">"+$("#username").val()+"</p> Data DoesNot Found "+myObj.Status+" </h6> </div>";
+		    	$("#canvas1").append(html);
+			}else{
+				$("#formdisplay").show();
+		    var myObj = JSON.parse(this.responseText);
+		    document.getElementById("uemail").value = myObj.EMAIL ; 
+		    document.getElementById("upassword").value = myObj.PASSWORD ; 
+		    document.getElementById("udob").value = myObj.DOB ; 
+		    document.getElementById("ufirstname").value = myObj.FIRST_NAME ; 
+		    document.getElementById("ulastname").value = myObj.LAST_NAME ; 
+		    document.getElementById("umobileno").value = myObj.MOBILE 
+		    document.getElementById("uaddress").value = myObj.Address; 
+		  } 
+		  }
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send(data);
+	
+	
+	
+	
+}
+function updatedata(){
+	 var data = JSON.stringify({
+		  "email": ""+document.getElementById('uemail').value+"",
+		  "password": ""+document.getElementById('upassword').value+"",
+		  "dob": ""+document.getElementById('udob').value+"",
+		  "firstname": ""+document.getElementById('ufirstname').value+"",
+		  "lastname": ""+document.getElementById('ulastname').value+"",
+		  "address": ""+document.getElementById('uaddress').value+"",  
+		  "mobileno": ""+document.getElementById('umobileno').value+"",
+		  "username": ""+document.getElementById('username').value+""  
+
+
+		});
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+		    var myObj = JSON.parse(this.responseText);
+		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
+
+		  }
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/update");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send(data);
 	  
-	  
-	  
-	  
-  }
+	
+	
+	
+}
+function hidefrom(){
+	$("#formdisplay").hide();
+}
+ 
+ 
+ 
   
   
   </script>
@@ -171,15 +297,13 @@ function retriveDataByUserName(){
 
   <div class="container-fulid" >
   <center>  <h1 id ="helo"> Hello Curd Operation </h1> </center>
-
     <div class="row">
       <div class="col-xs-5" style="background-color:#9acfea">
-              <center>  <h3 data-value="form"class="tool button">Insert From </h3></center><hr>
+              <center>  <h3 data-value="form"class="tool button" id="Msgpass">Insert From </h3></center><hr>
              <form  class="form-horizontal" method="post">
               Email<br><input type="email" class="form-control" name="email" id="email" placeholder="We'll never share your email with anyone else" style="width:450px;">
                 <br>Password<br><input type="password" class="form-control" name="password" id="password" placeholder="Enter password" style="width:450px;">
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" style="width:450px">
-                <br>ROLLNO<br>     <input type="text" class="form-control" name="rollno"id="rollno" placeholder="Enter rollno" style="width:450px;">
              	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" placeholder="Enter firstname" style="width:450px;">
                  <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" placeholder="Enter lastname" style="width:450px;">
                  <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" placeholder="Enter mobileno" style="width:450px;">
@@ -189,18 +313,37 @@ function retriveDataByUserName(){
       </div>
       <div class="col-xs-7" id="canvas" style="background-color:lightslategrey" >
         <center>  <h3 data-value="form"class="tool button">Retrive BY User name and password </h3></center><hr>
+  <input type="button" class="btn btn-danger"style ="float: right" value="DELETE" onClick="deleteUser()">
+  <input type="button" class="btn btn-primary"style ="float: right" id="updatebuttonshow" value="UPDATE" onClick="udatedatainform()">
+  
+        
         <form  class="form-horizontal" method="post">
-          <br>UserName<br>  <input type="text" class="form-control" name="username"id="username" placeholder="Enter username" style="width:450px;">
-           <br>Password<br><input type="password" class="form-control" name="passwordretrive" id="passwordretrive" placeholder="Enter password" style="width:450px;">
+          <br>UserName<br>  <input type="text" class="form-control" name="username"id="username" placeholder="Enter username" style="width:450px;" required>
+           <br>Password<br><input type="password" class="form-control" name="passwordretrive" id="passwordretrive" placeholder="Enter password" style="width:450px;" required>
             <br>  <input type="button" onclick="retriveDataByUserName()" value ="Retrive">  </input>
             <input type="reset"  value ="ResetButton">  </input>
             
           </form>
-          <div>
-          <br> <br> <hr>
-          <p id="demo"></p>
+          <div id="canvas1"> 
           
           </div>
+          <div id="formdisplay" style="display:none">
+            <center>  <h3 data-value="form"class="tool button" id="Msgpass">Update From </h3></center><hr>
+             <form  class="form-horizontal" method="post">
+              <input type="button" class="btn btn-info" onclick="hidefrom()" style ="float: right" value ="HIdeUpdateForm"> </input>
+              <input type="button" class="btn btn-info" onclick="updatedata()" style ="float: right" value ="UpdateChanges"> </input><br>
+             
+              Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;">
+                <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" style="width:450px;">
+                <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
+             	  <br>Firstname<br>  <input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
+                 <br>Lastname <br>  <input type="text" class="form-control"name="ulastname" id="ulastname"  style="width:450px;">
+                 <br>mobileno<br>   <input type="text" class="form-control"name="umobileno" id="umobileno" style="width:450px;">
+                 <br>Address  <br>  <textarea class="form-control" rows="2" name="uaddress"id="uaddress" style="width:450px;"></textarea>
+               <br>
+               </form>
+          </div>
+          
       </div>
     </div>
     <footer class="footer">

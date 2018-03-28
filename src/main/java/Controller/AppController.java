@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.scheduling.annotation.EnableAsync;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,12 +28,11 @@ public class AppController {
 	
 	DataServices cs=new DataServices();
 	
-    @RequestMapping(value="/tasks",method = RequestMethod.POST,headers="Accept=application/json")	
-public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  s1,@RequestParam("data2")String  s2){
+    @RequestMapping(value="/tasks",method = RequestMethod.GET,headers="Accept=application/json")	
+public @ResponseBody HashMap<String,Object> apps (){
 	HashMap <String,Object> hm =new HashMap<String,Object>(  );
 	hm.put("Hello", "World");
-	hm.put("id", s1);
-	hm.put("name", s2);
+	
 	System.out.println(hm);
 		return hm;
 		
@@ -74,6 +74,7 @@ public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  
 			if (hash.get("Password").equals("Strong")&&(hash.get("Mobile").equals("true")&& hash.get("Eamil").equals("true"))) {
 				String s= cs.addDataService(dm);
 				hash.put("Message",s);
+				hash.put("USER_NAME",dm.getUsername());
 				if (s==ValidationData.SRN)
 				{
 					hash.put("Satatus", "UnSuccessful");
@@ -94,9 +95,12 @@ public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  
  // Retrive Data By UserName
  	@RequestMapping (value="/retrivebyusername", method=RequestMethod.POST, headers="Accept=application/json")	
  	public HashMap<String,Object> retriveDataByUserName (@RequestBody DataModel usermodel){
+			HashMap<String,Object> hm=new HashMap<String, Object>();
+
  		try {
  			//ArrayList<String> s= cs. retriveDataService (usermodel);
  	 		HashMap<String,Object> hash=new HashMap<String, Object>(cs. retriveDataService (usermodel));
+ 	 		hash.put("Status", "success");
 
  			return hash;
  			/*if (s.isEmpty()) {
@@ -112,12 +116,54 @@ public @ResponseBody HashMap<String,Object> apps (@RequestParam("data1")String  
  		} catch (Exception e) {
  			System.out.println(e);
  			e.printStackTrace();
- 			return null;
+ 			hm.put("Status","UnSuccesful");
+			hm.put("Message",ValidationData.UNNF);
+ 			return hm;
  		}
  		   
  	 }
+ 	//Edit Delete
+ 		@RequestMapping (value="/edit/delete", method=RequestMethod.POST, headers="Accept=application/json")	
+ 		public HashMap<String ,Object> userDelete (@RequestBody DataModel usermodel){
+ 			HashMap<String,Object> hash=new HashMap<String, Object>();
+ 			try {
+ 				int i=cs.deleteDataService (usermodel);
+ 				if (i==1) {			
+ 					hash.put("Status","success");
+ 				    hash.put("Message",ValidationData.SD);
+ 				}else {
+ 					hash.put("Status","Error");
+ 					hash.put("Message",ValidationData.UNNF);
+ 				}
+ 			} catch (Exception e) {
+ 				e.printStackTrace();
+ 			}
+ 			return hash;
+ 		
+ 			}
     
-    
+
+ 		//Edit Udpate
+ 		@RequestMapping (value="/edit/update", method=RequestMethod.POST,headers="Accept=application/json")	  
+ 		public HashMap<String,Object> userUpdate (@RequestBody DataModel usermodel){
+ 			HashMap<String,Object> hash=new HashMap<String, Object>();
+ 			try {
+ 				int i = cs.updateDataService(usermodel);
+ 				if (i==1) {			
+ 					hash.put("Status","success");
+ 				    hash.put("Message",ValidationData.SU);
+ 				}else {
+ 					hash.put("Status","Error");
+ 					hash.put("Message",ValidationData.SUN);
+ 					hash.put("Message1",ValidationData.UNNF+"OR Duplicate Data");
+ 				}
+ 			} catch (Exception e) {
+ 				
+ 				e.printStackTrace();
+ 			}
+ 			return hash;
+ 		}
+ 		
     
 }
 

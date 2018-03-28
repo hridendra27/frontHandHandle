@@ -27,6 +27,7 @@ public class DataServices {
 		    hm.put("MOBILE", e.getMobileno());
 		    hm.put("DOB", e.getDob());
 		    hm.put("User_Name", e.getUsername());
+		    hm.put("Address", e.getAddress());
 		  return	dao.saveEmployee(hm);	
 			//return null;
 	
@@ -40,6 +41,42 @@ public class DataServices {
 		    HashMap<String,Object> m1=new HashMap<String,Object>(dao.retriveUserNameIdAndPassword(hm));
 			return m1;
 		}
+		//Delete service 
+		public int deleteDataService (DataModel e) {
+			HashMap <String,Object> hm =new  HashMap <String,Object> ();
+		    hm.put("USER_NAME", e.getUsername());
+		    
+		    	 return dao.deleteUserByUserName(hm);
+		
+		}
+		
+
+		//Update Service 
+		public int updateDataService (DataModel e) {
+			HashMap <String,Object> hm =new  HashMap <String,Object> ();
+			HashMap <String,Object> hm1 =new  HashMap <String,Object> ();
+			hm.put("FIRST_NAME", e.getFirstname());
+		    hm.put("LAST_NAME", e.getLastname());	    
+		    hm.put("EMAIL", e.getEmail());
+		    hm.put("PASSWORD", e.getPassword());
+		    hm.put("MOBILE", e.getMobileno());
+		    hm.put("DOB", e.getDob());
+		    hm.put("User_Name", e.getUsername());
+		    hm.put("Address", e.getAddress());
+
+		    for (HashMap.Entry<String, Object> m:hm.entrySet()) {
+		    	String key=m.getKey();
+		    	if (m.getValue()!=null) {
+		    		hm1.put(key,m.getValue());
+		    	}
+		    }
+	        String username =(String) hm1.get("User_Name");
+	        hm1.remove("User_Name");  
+	    	return dao.updateUserByUserName(hm1,username); 
+	       
+		
+		}
+		
 	
 	
 }

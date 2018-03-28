@@ -53,4 +53,26 @@ public HashMap<String,Object> retriveUserNameIdAndPassword(HashMap<String,Object
 		return null;
 	}
 
+public int deleteUserByUserName (HashMap<String ,Object> param) {
+	try {
+		String sql=deletequery.deleteDataByUserName(param,"studentmain");
+		return jdbcTemplate.update(sql);
+	} catch (DataAccessException e) {
+		e.printStackTrace();
+	}
+	
+	return 0;
+}
+public int updateUserByUserName (HashMap<String ,Object> param , String username) {
+	try {
+		String sql =updatequery.updateDataByUserName (param, username, "studentmain");
+		return jdbcTemplate.update(sql);
+		
+	} catch (DataAccessException e) {
+		e.printStackTrace();
+	}
+	return 0;
+}
+
+
 }
