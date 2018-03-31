@@ -118,6 +118,7 @@
 	  
   }
 function retriveDataByUserName(){
+	hidefrom();
 	  var dataofuser="";
 	  var myJSON=null;
 	  var html="";
@@ -191,7 +192,8 @@ function deleteUser(){
 		
 }
 
-function deleteUsertable(username , password){
+function deleteUsertable(username,password){
+	hidefrom();
 	  var myJSON=null;
 	  var html="";
 	  var data = JSON.stringify({
@@ -220,6 +222,45 @@ function deleteUsertable(username , password){
 	  
 	  
 }
+function updateUserTable(username,password){
+	hidefrom();
+	var myJSON=null;
+	  var data = JSON.stringify({
+		  "password": ""+password+"",
+		  "username": ""+username+""  
+		});
+
+		var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+		    var myObj = JSON.parse(this.responseText);
+			document.getElementById("canvas1").innerHTML="";
+		    if (myObj.Status==="UnSuccesful"){
+		    	html="<div><h3 style="+"color:Blue;"+"> Sorry!... For User <span style="+"color:red;"+">"+$("#uusername").val()+"</span> Data DoesNot Found "+myObj.Status+" </h3> </div>";
+		    	$("#canvas1").append(html);
+			}else{
+				$("#formdisplay").show();
+		    var myObj = JSON.parse(this.responseText);
+		    document.getElementById("uusername").value = myObj.User_Name; 
+		    document.getElementById("uemail").value = myObj.EMAIL ; 
+		    document.getElementById("upassword").value = myObj.PASSWORD ; 
+		    document.getElementById("udob").value = myObj.DOB ; 
+		    document.getElementById("ufirstname").value = myObj.FIRST_NAME ; 
+		    document.getElementById("ulastname").value = myObj.LAST_NAME ; 
+		    document.getElementById("umobileno").value = myObj.MOBILE 
+		    document.getElementById("uaddress").value = myObj.Address; 
+		  } 
+		  }
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send(data);	
+}
+
 
 
 function udatedatainform(){
@@ -237,11 +278,12 @@ function udatedatainform(){
 		    var myObj = JSON.parse(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
 		    if (myObj.Status==="UnSuccesful"){
-		    	html="<div><h3 style="+"color:Blue;"+"> Sorry!... For User <span style="+"color:red;"+">"+$("#username").val()+"</span> Data DoesNot Found "+myObj.Status+" </h3> </div>";
+		    	html="<div><h3 style="+"color:Blue;"+"> Sorry!... For User <span style="+"color:red;"+">"+$("#uusername").val()+"</span> Data DoesNot Found "+myObj.Status+" </h3> </div>";
 		    	$("#canvas1").append(html);
 			}else{
 				$("#formdisplay").show();
 		    var myObj = JSON.parse(this.responseText);
+		    document.getElementById("uusername").value = myObj.User_Name; 
 		    document.getElementById("uemail").value = myObj.EMAIL ; 
 		    document.getElementById("upassword").value = myObj.PASSWORD ; 
 		    document.getElementById("udob").value = myObj.DOB ; 
@@ -249,6 +291,7 @@ function udatedatainform(){
 		    document.getElementById("ulastname").value = myObj.LAST_NAME ; 
 		    document.getElementById("umobileno").value = myObj.MOBILE 
 		    document.getElementById("uaddress").value = myObj.Address; 
+		    
 		  } 
 		  }
 		});
@@ -256,11 +299,7 @@ function udatedatainform(){
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
-		xhr.send(data);
-	
-	
-	
-	
+		xhr.send(data);	
 }
 function updatedata(){
 	 var data = JSON.stringify({
@@ -271,7 +310,7 @@ function updatedata(){
 		  "lastname": ""+document.getElementById('ulastname').value+"",
 		  "address": ""+document.getElementById('uaddress').value+"",  
 		  "mobileno": ""+document.getElementById('umobileno').value+"",
-		  "username": ""+document.getElementById('username').value+""  
+		  "username": ""+document.getElementById('uusername').value+""  
 
 
 		});
@@ -297,9 +336,10 @@ function updatedata(){
 function hidefrom(){
 	$("#formdisplay").hide();
 }
- 
+
  
  function retrivedataall(){
+	 hidefrom();
 	 var dataofuser="";
 	 html="";
 	 var xhr = new XMLHttpRequest();
@@ -312,12 +352,13 @@ function hidefrom(){
 
 		    dataofuser=this.responseText;
 		    var j = JSON.parse(dataofuser);
- html="<div class="+"container"+"><h2>AllUserData</h2><hr><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th></tr></thead><tbody>";
+ html="<div class="+"container"+"><h2>AllUserData</h2><hr><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th><th>DELETE</th><th>UPDATE</th></tr></thead><tbody>";
 
 		    for (var i in j){
-		    	console.log (j[i].EMAIL);
 html+=" <tr><td>"+j[i].FIRST_NAME+"</td><td>"+j[i].LAST_NAME+"</td><td>"+j[i].EMAIL+"@</td><td>"+j[i].S_ID+"</td><td>"+j[i].User_Name+"</td><td>"+j[i].DOB+"</td><td>"+j[i].MOBILE+"</td><td>"+j[i].Address+"</td>";
-html+="<td><input type="+"button"+" class="+"btn btn-danger"+"style ="+"float: right"+" value="+"DELETE"+" onClick="+"deleteUsertable("+j[i].User_Name+","+j[i].PASSWORD+")"+"></td></tr> ";    
+html+="<td><input type="+"button"+" class="+"btn"+" value="+"DELETE"+" onClick="+"deleteUsertable('"+j[i].User_Name+"','"+j[i].PASSWORD+"')"+"></td>";    
+html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick="+"updateUserTable('"+j[i].User_Name+"','"+j[i].PASSWORD+"')"+"></td></tr> ";    
+		   
 		    }
 	    	$("#canvas1").append(html);
 		  }
@@ -326,7 +367,7 @@ html+="<td><input type="+"button"+" class="+"btn btn-danger"+"style ="+"float: r
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/retriveall");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
-		xhr.send();
+		xhr.send(); 
 	 
 	 
  }
@@ -388,6 +429,7 @@ html+="<td><input type="+"button"+" class="+"btn btn-danger"+"style ="+"float: r
               <input type="button" class="btn btn-info" onclick="updatedata()" style ="float: right" value ="UpdateChanges"> </input><br>
              
               Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;">
+               <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;">
                 <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" style="width:450px;">
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
              	  <br>Firstname<br>  <input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
