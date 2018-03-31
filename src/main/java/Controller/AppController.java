@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.scheduling.annotation.EnableAsync;
-//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +20,7 @@ import Lib_Query.*;
 import Model.DataModel;
 import Services.DataServices;
 
-//@CrossOrigin(origins="*")
+@CrossOrigin(origins="*")
 @RestController
 @EnableWebMvc
 @EnableAsync
