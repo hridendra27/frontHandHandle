@@ -8,6 +8,8 @@
 
 
 
+
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -67,8 +69,6 @@
    background-position: right top;
    background-repeat: no-repeat;
  }
-
-
   </style>
   </head>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -100,12 +100,7 @@
 
 }
   function dataModel(){
-  /*  if (passwordvalidation()===false){
-      alert("Please Enter valid password");
-      document.getElementById('password').style.borderColor = "red";
 
-
-    }else{*/
   var email=document.getElementById('email').value;
   var password=document.getElementById('password').value;
   var firstname=document.getElementById('firstname').value;
@@ -113,6 +108,7 @@
   var dob=document.getElementById('dob').value;
 
 var res= formvalidation(email,password,mobileno,firstname,dob) ;
+console.log(res);
 
 	  var data = JSON.stringify({
 		  "email": ""+document.getElementById('email').value+"",
@@ -124,13 +120,13 @@ var res= formvalidation(email,password,mobileno,firstname,dob) ;
 		  "mobileno": ""+document.getElementById('mobileno').value+""
 
 		});
-//}
+
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		   console.log(this.responseText);
+		  console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			if (myObj.Message==="You are successfully Resgistered"){
 			document.getElementById("Msgpass").innerHTML="Thanks for Register! <br> <center><p>Your User Name:"+myObj.USER_NAME+" </p> </center>";
@@ -139,12 +135,15 @@ var res= formvalidation(email,password,mobileno,firstname,dob) ;
 		  }
 		  }
 		});
+    if (res===false){
+      document.getElementById("Msgpass").innerHTML="Sorry You are not registered!<br> "  ;
 
+    }else{
 		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/datamodel");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-
+}
 
   }
 function retriveDataByUserName(){
@@ -188,9 +187,6 @@ canvas.append(html);
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-
-
-
   }
 
 function deleteUser(){
@@ -210,7 +206,10 @@ function deleteUser(){
 		    dataofuser=this.responseText;
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
+      document.getElementById("canvas1").innerHTML="";
+
 		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
+
 		  }
 		});
 
@@ -238,7 +237,11 @@ function deleteUsertable(username,password){
 		   // console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
+
 		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
+        retrivedataall();
+
+
 		  }
 		});
 
@@ -299,7 +302,7 @@ function udatedatainform(){
 		});
 
 		var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;http://localhost
+		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
 		  //  console.log(this.responseText);
@@ -330,6 +333,15 @@ function udatedatainform(){
 		xhr.send(data);
 }
 function updatedata(){
+  var email=document.getElementById('uemail').value;
+  var password=document.getElementById('upassword').value;
+  var firstname=document.getElementById('ufirstname').value;
+  var mobileno=document.getElementById('umobileno').value;
+  var dob=document.getElementById('udob').value;
+
+  var res= formvalidation(email,password,mobileno,firstname,dob) ;
+  console.log(res);
+
 	 var data = JSON.stringify({
 		  "email": ""+document.getElementById('uemail').value+"",
 		  "password": ""+document.getElementById('upassword').value+"",
@@ -339,10 +351,8 @@ function updatedata(){
 		  "address": ""+document.getElementById('uaddress').value+"",
 		  "mobileno": ""+document.getElementById('umobileno').value+"",
 		  "username": ""+document.getElementById('uusername').value+""
-
-
 		});
-	 http://localhost
+
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 
@@ -354,12 +364,14 @@ function updatedata(){
 
 		  }
 		});
-
+    if (res===false){
+console.log("You Have Enter not Valid Entity");
+    }else{
 		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/edit/update");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-
+}
 }
 function hidefrom(){
 	$("#formdisplay").hide();
@@ -378,7 +390,7 @@ function hidefrom(){
 		   // console.log(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
       var myObj = JSON.parse(this.responseText);
-  html="<div class="+"container"+"><h2>AllUserData</h2><hr><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th><th>DELETE</th><th>UPDATE</th></tr></thead><tbody>";
+  html="<div class="+"container"+"><h2>AllUserData</h2><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th><th>DELETE</th><th>UPDATE</th></tr></thead><tbody>";
 
         for (var i in myObj.Data){
 html+=" <tr><td>"+myObj.Data[i].FIRST_NAME+"</td><td>"+myObj.Data[i].LAST_NAME+"</td><td>"+myObj.Data[i].EMAIL+"@</td><td>"+myObj.Data[i].S_ID+"</td><td>"+myObj.Data[i].User_Name+"</td><td>"+myObj.Data[i].DOB+"</td><td>"+myObj.Data[i].MOBILE+"</td>";
@@ -407,7 +419,7 @@ function check(){
 		  }
 		});
 
-		xhr.open("GET", "http://192.168.0.171:8080/frontHandHandle/tasks");
+		xhr.open("GET", "http://localhost:8080/frontHandHandle/tasks");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send();
@@ -422,7 +434,7 @@ function check1(){
 		});
 
 	        var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;http://localhost
+		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
 		    console.log(this.responseText);
@@ -430,7 +442,7 @@ function check1(){
 		  }
 		});
 
-		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/hola");
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/hola");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -451,8 +463,7 @@ function passwordvalidation(){
    }
 }*/
 function formvalidation(email,password,mobileno,firstname,dob){
-var  flag= false;
-  document.getElementById('email').style.borderColor = "#ccc";http://localhost
+  document.getElementById('email').style.borderColor = "#ccc";
   document.getElementById('password').style.borderColor = "#ccc";
   document.getElementById('firstname').style.borderColor = "#ccc";
   document.getElementById('mobileno').style.borderColor = "#ccc";
@@ -462,41 +473,67 @@ var  flag= false;
         document.getElementById('email').style.borderColor = "red";
         return false;
       }
-      
+    //Email form validation
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if(!email.match(mailformat))
+      {
+        alert("You have entered an invalid email address!");
+        return false;
+      }
 
   if(password=== "") {
         alert("Error: Please Inter password ");
         document.getElementById('password').style.borderColor = "red";
         return false;
       }
+      //Password Validation
+  var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  if(!password.match(pass))
+   {
+     alert("Not a valid Password");
+     return false;
+    }
+
+
   if(dob=== "") {
         alert("Error: Please Inter DateOfBirth ");
         document.getElementById('dob').style.borderColor = "red";
         return false;
       }
+
+
   if(firstname=== "") {
           alert("Error: Please Inter Firstname");
           document.getElementById('firstname').style.borderColor = "red";
           return false;
         }
+        // Name Validation
+      var na = /^[A-Za-z ]+$/;
+    if(!firstname.match(na))
+       {
+         alert("Plese Enter Valid name Numbers Not Allowed");
+         return false;
+        }
+
   if(mobileno=== "") {
           alert("Error: Please Inter mobileno ");
           document.getElementById('mobileno').style.borderColor = "red";
           return false;
         }
-    // Email form validation
+      //Phone no Validation
+    var phoneno = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+  if(!mobileno.match(phoneno))
+     {
+       alert("Not a valid Phone Number");
+       return false;
+      }
 
-
-
+    return true;
 
 }
-
-
-
-
   </script>
  <!--  <body>
-    <form class="work" action="http://192.168.0.171:8080/frontHandHandle/tasks" method="post">
+    <form class="work" action="http://localhost:8080/frontHandHandle/tasks" method="post">
       <input type="text" id="data1" name="data1" value="data1">
       <input type="text" id="data2" name="data2" value="data2">
 
@@ -520,13 +557,13 @@ var  flag= false;
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" required style="width:350px">
              	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" required placeholder="Enter firstname" style="width:350px;">
                  <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" required placeholder="Enter lastname" style="width:350px;">
-                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno"required placeholder="Enter mobileno" style="width:350px;">
+                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" pattern="([0|\+[0-9]{1,5})?([7-9][0-9]{9})" required placeholder="Enter mobileno" style="width:350px;">
                  <br>Address  <br>  <textarea class="form-control" rows="3" name="address"id="address" style="width:350px;"></textarea>
                  <br>  <input type="button" onclick="dataModel()" value ="Register"> </input>
                </form>
       </div>
       <div class="col-xs-9" id="canvas" style="background-color:lightslategrey" >
-        <center>  <h3 data-value="form"class="tool button">Retrive BY User name and password </h3></center><hr>
+    <center>  <h3 data-value="form"class="tool button">Retrive BY User name and password </h3></center><hr>
   <input type="button" class="btn btn-danger"style ="float: right" value="DELETE" onClick="deleteUser()">
   <input type="button" class="btn btn-primary"style ="float: right" id="updatebuttonshow" value="UPDATE" onClick="udatedatainform()">
     <input type="button" class="btn btn-info"style ="float: right" value="ALLDATA" onClick="retrivedataall()">
@@ -536,13 +573,12 @@ var  flag= false;
 
         <form  class="form-horizontal" method="post">
           <br>UserName<br>  <input type="text" class="form-control" name="username"id="username" placeholder="Enter username" style="width:450px;" required>
-           <br>Password<br><input type="password" class="form-control" name="passwordretrive" id="passwordretrive" placeholder="Enter password" style="width:450px;" required>
+           <br>Password<br><input type="password" class="form-control" name="passwordretrive" id="passwordretrive"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required  placeholder="Enter password" style="width:450px;" required>
             <br>  <input type="button" onclick="retriveDataByUserName()" value ="Retrive">  </input>
             <input type="reset"  value ="ResetButton">  </input>
 
           </form>
           <div id="canvas1">
-
           </div>
 
           <div id="formdisplay" style="display:none">
@@ -553,7 +589,7 @@ var  flag= false;
 
               Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;" >
                <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;" disabled>
-                <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" style="width:450px;">
+                <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required  style="width:450px;">
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
              	  <br>Firstname<br>  <input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
                  <br>Lastname <br>  <input type="text" class="form-control"name="ulastname" id="ulastname"  style="width:450px;">
@@ -571,4 +607,3 @@ var  flag= false;
   </div>
 </body>
 </html>
-
