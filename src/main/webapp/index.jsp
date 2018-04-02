@@ -6,6 +6,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 
+
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -54,6 +56,18 @@
        margin: 1px;
 
      }
+     input:required:invalid, input:focus:invalid {
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAeVJREFUeNqkU01oE1EQ/mazSTdRmqSxLVSJVKU9RYoHD8WfHr16kh5EFA8eSy6hXrwUPBSKZ6E9V1CU4tGf0DZWDEQrGkhprRDbCvlpavan3ezu+LLSUnADLZnHwHvzmJlvvpkhZkY7IqFNaTuAfPhhP/8Uo87SGSaDsP27hgYM/lUpy6lHdqsAtM+BPfvqKp3ufYKwcgmWCug6oKmrrG3PoaqngWjdd/922hOBs5C/jJA6x7AiUt8VYVUAVQXXShfIqCYRMZO8/N1N+B8H1sOUwivpSUSVCJ2MAjtVwBAIdv+AQkHQqbOgc+fBvorjyQENDcch16/BtkQdAlC4E6jrYHGgGU18Io3gmhzJuwub6/fQJYNi/YBpCifhbDaAPXFvCBVxXbvfbNGFeN8DkjogWAd8DljV3KRutcEAeHMN/HXZ4p9bhncJHCyhNx52R0Kv/XNuQvYBnM+CP7xddXL5KaJw0TMAF8qjnMvegeK/SLHubhpKDKIrJDlvXoMX3y9xcSMZyBQ+tpyk5hzsa2Ns7LGdfWdbL6fZvHn92d7dgROH/730YBLtiZmEdGPkFnhX4kxmjVe2xgPfCtrRd6GHRtEh9zsL8xVe+pwSzj+OtwvletZZ/wLeKD71L+ZeHHWZ/gowABkp7AwwnEjFAAAAAElFTkSuQmCC);
+   background-position: right top;
+   background-repeat: no-repeat;
+   -moz-box-shadow: none;
+ }
+ input:required:valid {
+   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAepJREFUeNrEk79PFEEUx9/uDDd7v/AAQQnEQokmJCRGwc7/QeM/YGVxsZJQYI/EhCChICYmUJigNBSGzobQaI5SaYRw6imne0d2D/bYmZ3dGd+YQKEHYiyc5GUyb3Y+77vfeWNpreFfhvXfAWAAJtbKi7dff1rWK9vPHx3mThP2Iaipk5EzTg8Qmru38H7izmkFHAF4WH1R52654PR0Oamzj2dKxYt/Bbg1OPZuY3d9aU82VGem/5LtnJscLxWzfzRxaWNqWJP0XUadIbSzu5DuvUJpzq7sfYBKsP1GJeLB+PWpt8cCXm4+2+zLXx4guKiLXWA2Nc5ChOuacMEPv20FkT+dIawyenVi5VcAbcigWzXLeNiDRCdwId0LFm5IUMBIBgrp8wOEsFlfeCGm23/zoBZWn9a4C314A1nCoM1OAVccuGyCkPs/P+pIdVIOkG9pIh6YlyqCrwhRKD3GygK9PUBImIQQxRi4b2O+JcCLg8+e8NZiLVEygwCrWpYF0jQJziYU/ho2TUuCPTn8hHcQNuZy1/94sAMOzQHDeqaij7Cd8Dt8CatGhX3iWxgtFW/m29pnUjR7TSQcRCIAVW1FSr6KAVYdi+5Pj8yunviYHq7f72po3Y9dbi7CxzDO1+duzCXH9cEPAQYAhJELY/AqBtwAAAAASUVORK5CYII=);
+   background-position: right top;
+   background-repeat: no-repeat;
+ }
+
 
   </style>
   </head>
@@ -77,7 +91,7 @@
     //      console.log(this.responseText);
         }
       });
-    xhr.open("POST", "http://localhost:8080/frontHandHandle/tasks");
+    xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/tasks");
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("cache-control", "no-cache");
 
@@ -86,6 +100,20 @@
 
 }
   function dataModel(){
+  /*  if (passwordvalidation()===false){
+      alert("Please Enter valid password");
+      document.getElementById('password').style.borderColor = "red";
+
+
+    }else{*/
+  var email=document.getElementById('email').value;
+  var password=document.getElementById('password').value;
+  var firstname=document.getElementById('firstname').value;
+  var mobileno=document.getElementById('mobileno').value;
+  var dob=document.getElementById('dob').value;
+
+var res= formvalidation(email,password,mobileno,firstname,dob) ;
+
 	  var data = JSON.stringify({
 		  "email": ""+document.getElementById('email').value+"",
 		  "password": ""+document.getElementById('password').value+"",
@@ -96,13 +124,13 @@
 		  "mobileno": ""+document.getElementById('mobileno').value+""
 
 		});
-
+//}
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		  //  console.log(this.responseText);
+		   console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			if (myObj.Message==="You are successfully Resgistered"){
 			document.getElementById("Msgpass").innerHTML="Thanks for Register! <br> <center><p>Your User Name:"+myObj.USER_NAME+" </p> </center>";
@@ -112,7 +140,7 @@
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/datamodel");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/datamodel");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -156,7 +184,7 @@ canvas.append(html);
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -186,7 +214,7 @@ function deleteUser(){
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/delete");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/edit/delete");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -214,7 +242,7 @@ function deleteUsertable(username,password){
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/delete");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/edit/delete");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -255,7 +283,7 @@ function updateUserTable(username,password){
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -271,7 +299,7 @@ function udatedatainform(){
 		});
 
 		var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;
+		xhr.withCredentials = true;http://localhost
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
 		  //  console.log(this.responseText);
@@ -296,7 +324,7 @@ function udatedatainform(){
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -314,7 +342,7 @@ function updatedata(){
 
 
 		});
-
+	 http://localhost
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 
@@ -327,7 +355,7 @@ function updatedata(){
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/update");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/edit/update");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
@@ -354,14 +382,14 @@ function hidefrom(){
 
         for (var i in myObj.Data){
 html+=" <tr><td>"+myObj.Data[i].FIRST_NAME+"</td><td>"+myObj.Data[i].LAST_NAME+"</td><td>"+myObj.Data[i].EMAIL+"@</td><td>"+myObj.Data[i].S_ID+"</td><td>"+myObj.Data[i].User_Name+"</td><td>"+myObj.Data[i].DOB+"</td><td>"+myObj.Data[i].MOBILE+"</td>";
-html+="<td>"+myObj.Data[i].Address+"</td> <td><input type="+"button"+" class="+"btn"+" value="+"DELETE"+" onClick="+"deleteUsertable('"+myObj.Data[1].User_Name+"','"+myObj.Data[1].PASSWORD+"')"+"></td>";
+html+="<td>"+myObj.Data[i].Address+"</td> <td><input type="+"button"+" class="+"btn"+" value="+"DELETE"+" onClick="+"deleteUsertable('"+myObj.Data[i].User_Name+"','"+myObj.Data[i].PASSWORD+"')"+"></td>";
 html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick="+"updateUserTable('"+myObj.Data[i].User_Name+"','"+myObj.Data[i].PASSWORD+"')"+"></td></tr> ";
         }
 	    	$("#canvas1").append(html);
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/retriveall");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/retriveall");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send();
@@ -379,7 +407,7 @@ function check(){
 		  }
 		});
 
-		xhr.open("GET", "http://localhost:8080/frontHandHandle/tasks");
+		xhr.open("GET", "http://192.168.0.171:8080/frontHandHandle/tasks");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send();
@@ -394,7 +422,7 @@ function check1(){
 		});
 
 	        var xhr = new XMLHttpRequest();
-		xhr.withCredentials = true;
+		xhr.withCredentials = true;http://localhost
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
 		    console.log(this.responseText);
@@ -402,17 +430,73 @@ function check1(){
 		  }
 		});
 
-		xhr.open("POST", "http://localhost:8080/frontHandHandle/hola");
+		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/hola");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
 
- }*/
+ }
+
+function passwordvalidation(){
+  var newPassword = document.getElementById('password');
+  var patt = new RegExp("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+
+   var check=patt.test(newPassword);
+   console.log(check);
+   if(check===false) {
+       alert("password should contain atleast one number and one special character");
+       return false;
+   }else{
+     return true;
+   }
+}*/
+function formvalidation(email,password,mobileno,firstname,dob){
+var  flag= false;
+  document.getElementById('email').style.borderColor = "#ccc";http://localhost
+  document.getElementById('password').style.borderColor = "#ccc";
+  document.getElementById('firstname').style.borderColor = "#ccc";
+  document.getElementById('mobileno').style.borderColor = "#ccc";
+  document.getElementById('dob').style.borderColor = "#ccc";
+  if(email=== "") {
+        alert("Error: Please Inter Email");
+        document.getElementById('email').style.borderColor = "red";
+        return false;
+      }
+      
+
+  if(password=== "") {
+        alert("Error: Please Inter password ");
+        document.getElementById('password').style.borderColor = "red";
+        return false;
+      }
+  if(dob=== "") {
+        alert("Error: Please Inter DateOfBirth ");
+        document.getElementById('dob').style.borderColor = "red";
+        return false;
+      }
+  if(firstname=== "") {
+          alert("Error: Please Inter Firstname");
+          document.getElementById('firstname').style.borderColor = "red";
+          return false;
+        }
+  if(mobileno=== "") {
+          alert("Error: Please Inter mobileno ");
+          document.getElementById('mobileno').style.borderColor = "red";
+          return false;
+        }
+    // Email form validation
+
+
+
+
+}
+
+
 
 
   </script>
  <!--  <body>
-    <form class="work" action="http://localhost:8080/frontHandHandle/tasks" method="post">
+    <form class="work" action="http://192.168.0.171:8080/frontHandHandle/tasks" method="post">
       <input type="text" id="data1" name="data1" value="data1">
       <input type="text" id="data2" name="data2" value="data2">
 
@@ -431,12 +515,12 @@ function check1(){
       <div class="col-xs-3" style="background-color:#9acfea">
               <center>  <h3 data-value="form"class="tool button" id="Msgpass">Insert From </h3></center><hr>
              <form  class="form-horizontal" method="post">
-              Email<br><input type="email" class="form-control" name="email" id="email" placeholder="We'll never share your email with anyone else" style="width:350px;">
-                <br>Password<br><input type="password" class="form-control" name="password" id="password" placeholder="Enter password" style="width:350px;">
-                <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" style="width:350px">
-             	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" placeholder="Enter firstname" style="width:350px;">
-                 <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" placeholder="Enter lastname" style="width:350px;">
-                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" placeholder="Enter mobileno" style="width:350px;">
+               Email<br><input type="email" class="form-control" name="email" id="email" required  placeholder="We'll never share your email with anyone else" style="width:350px;" >
+                <br>Password<br><input type="password" class="form-control" name="password" id="password"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required placeholder="Enter password" style="width:350px;" >
+                <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" required style="width:350px">
+             	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" required placeholder="Enter firstname" style="width:350px;">
+                 <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" required placeholder="Enter lastname" style="width:350px;">
+                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno"required placeholder="Enter mobileno" style="width:350px;">
                  <br>Address  <br>  <textarea class="form-control" rows="3" name="address"id="address" style="width:350px;"></textarea>
                  <br>  <input type="button" onclick="dataModel()" value ="Register"> </input>
                </form>
@@ -467,7 +551,7 @@ function check1(){
               <input type="button" class="btn btn-info" onclick="hidefrom()" style ="float: right" value ="HIdeUpdateForm"> </input>
               <input type="button" class="btn btn-info" onclick="updatedata()" style ="float: right" value ="UpdateChanges"> </input><br>
 
-              Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;">
+              Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;" >
                <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;" disabled>
                 <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" style="width:450px;">
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
@@ -487,3 +571,4 @@ function check1(){
   </div>
 </body>
 </html>
+
