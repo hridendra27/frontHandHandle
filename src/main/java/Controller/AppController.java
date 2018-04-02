@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.scheduling.annotation.EnableAsync;
-//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +20,7 @@ import Lib_Query.*;
 import Model.DataModel;
 import Services.DataServices;
 
-//@CrossOrigin(origins="*")
+@CrossOrigin(origins="*")
 @RestController
 @EnableWebMvc
 @EnableAsync
@@ -37,6 +37,16 @@ public @ResponseBody HashMap<String,Object> apps (){
 		return hm;
 		
 	}
+    @RequestMapping(value="/hola",method = RequestMethod.POST,headers="Accept=application/json")	
+    public @ResponseBody HashMap<String,Object> apps1 (@RequestBody DataModel dm){
+    	HashMap <String,Object> hm =new HashMap<String,Object>(  );
+    	hm.put("Hello", "World");
+    	System.out.println(dm.getUsername());
+    	
+    	System.out.println(hm);
+    		return hm;
+    		
+    	}
     @RequestMapping(value = "/checkl", method = RequestMethod.POST)  
     public @ResponseBody HashMap<String,Object> apps1 (HttpServletRequest request, HttpServletResponse response){
     	HashMap <String,Object> hm =new HashMap<String,Object>();
@@ -94,7 +104,7 @@ public @ResponseBody HashMap<String,Object> apps (){
     
  // Retrive Data By UserName
  	@RequestMapping (value="/retrivebyusername", method=RequestMethod.POST, headers="Accept=application/json")	
- 	public HashMap<String,Object> retriveDataByUserName (@RequestBody DataModel usermodel){
+ 	public @ResponseBody HashMap<String,Object> retriveDataByUserName (@RequestBody DataModel usermodel){
 			HashMap<String,Object> hm=new HashMap<String, Object>();
 
  		try {
@@ -124,7 +134,7 @@ public @ResponseBody HashMap<String,Object> apps (){
  	 }
  	//Edit Delete
  		@RequestMapping (value="/edit/delete", method=RequestMethod.POST, headers="Accept=application/json")	
- 		public HashMap<String ,Object> userDelete (@RequestBody DataModel usermodel){
+ 		public  @ResponseBody HashMap<String ,Object> userDelete (@RequestBody DataModel usermodel){
  			HashMap<String,Object> hash=new HashMap<String, Object>();
  			try {
  				int i=cs.deleteDataService (usermodel);
@@ -145,9 +155,10 @@ public @ResponseBody HashMap<String,Object> apps (){
 
  		//Edit Udpate
  		@RequestMapping (value="/edit/update", method=RequestMethod.POST,headers="Accept=application/json")	  
- 		public HashMap<String,Object> userUpdate (@RequestBody DataModel usermodel){
+ 		public @ResponseBody HashMap<String,Object> userUpdate (@RequestBody DataModel usermodel){
  			HashMap<String,Object> hash=new HashMap<String, Object>();
  			try {
+ 				System.out.print(usermodel.getUsername());
  				int i = cs.updateDataService(usermodel);
  				if (i==1) {			
  					hash.put("Status","success");
@@ -166,14 +177,18 @@ public @ResponseBody HashMap<String,Object> apps (){
  		//Retrive User All
  		
  		@RequestMapping (value="/retriveall", method=RequestMethod.POST,headers="Accept=application/json")	  
- 		public ArrayList<String> retriveall (){
+ 		public @ResponseBody HashMap<String, Object> retriveall (){
+ 			HashMap<String,Object> hash=new HashMap<String, Object>();
+
  			ArrayList<String> al=new ArrayList<String>(cs.dataRetrivalUser());
- 			return al;
+				hash.put("Data", al);
+
+ 			return hash;
  		}
     
  		//Session Result Set 
  		@RequestMapping("/sessionset")
- 		public ArrayList<String> sessionSet (){
+ 		public @ResponseBody HashMap<String, Object> sessionSet (){
  			HashMap<String,Object> hash=new HashMap<String, Object>();
  			ArrayList<String> al=new ArrayList<String>();
  			try {
@@ -193,8 +208,7 @@ public @ResponseBody HashMap<String,Object> apps (){
  				// TODO Auto-generated catch block
  				e.printStackTrace();
  			}
- 			System.out.println(al);
- 			return al;
+ 			return hash;
  		}
 }
 

@@ -19,7 +19,7 @@
 		
 
 		<!-- Spring -->
-		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
+		<spring-framework.version>4.3.14.RELEASE</spring-framework.version>
 
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.2.1.Final</hibernate.version>
@@ -139,27 +139,19 @@
     <version>2.9.0</version>
 </dependency>
 
+
 <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-dao</artifactId>
     <version>2.0.8</version>
    </dependency>
-		 <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>4.1.8.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>4.1.8.RELEASE</version>
-		</dependency> 
+		 
+		
 	
-	<!-- <dependency>
+	<!--  <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>4.3.9.RELEASE</version>
-        </dependency> -->
+        </dependency>  -->
 	</dependencies>	
 </project>

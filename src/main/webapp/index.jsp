@@ -4,14 +4,16 @@
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
+
 <html>
   <head>
     <meta charset="utf-8">
     <title>New App </title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    
-    
+
+
     <style>
      h3{
        border-radius: 5px;
@@ -52,7 +54,7 @@
        margin: 1px;
 
      }
-     
+
   </style>
   </head>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -64,7 +66,7 @@
 		  "data1": "Ramesrh@hy0789",
 		  "data2": "rbvssv"
 		}); */
-	  
+
 		var data = "data1="+document.getElementById('data1').value+"&data2="+document.getElementById('data2').value+"";
 		console.log(data);
 
@@ -72,15 +74,15 @@
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-          console.log(this.responseText);
+    //      console.log(this.responseText);
         }
-      }); 
+      });
     xhr.open("POST", "http://localhost:8080/frontHandHandle/tasks");
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.setRequestHeader("cache-control", "no-cache");
 
     xhr.send(data);
-       
+
 
 }
   function dataModel(){
@@ -90,8 +92,8 @@
 		  "dob": ""+document.getElementById('dob').value+"",
 		  "firstname": ""+document.getElementById('firstname').value+"",
 		  "lastname": ""+document.getElementById('lastname').value+"",
-		  "address": ""+document.getElementById('address').value+"",  
-		  "mobileno": ""+document.getElementById('mobileno').value+""  
+		  "address": ""+document.getElementById('address').value+"",
+		  "mobileno": ""+document.getElementById('mobileno').value+""
 
 		});
 
@@ -100,7 +102,7 @@
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		  //  console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			if (myObj.Message==="You are successfully Resgistered"){
 			document.getElementById("Msgpass").innerHTML="Thanks for Register! <br> <center><p>Your User Name:"+myObj.USER_NAME+" </p> </center>";
@@ -114,8 +116,8 @@
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-	  
-	  
+
+
   }
 function retriveDataByUserName(){
 	hidefrom();
@@ -125,7 +127,7 @@ function retriveDataByUserName(){
 	  var canvas=$("#canvas1");
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
-		  "username": ""+document.getElementById('username').value+""  
+		  "username": ""+document.getElementById('username').value+""
 		});
 
 		var xhr = new XMLHttpRequest();
@@ -133,26 +135,25 @@ function retriveDataByUserName(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		 //   console.log(this.responseText);
 		    dataofuser=this.responseText;
-		    
+
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
-			console.log(myObj.S_ID);
+		//	console.log(myObj.S_ID);
 			document.getElementById("canvas1").innerHTML="";
 			if (myObj.Status==="UnSuccesful"){
 				html="<div><h2 style="+"color:red;"+"> Sorry!... Something Gone Wrong User Id And Password Doesn't Match  "+myObj.Status+" </h2> </div>";
-				
+
 			}else{
 
 html="<div class="+"container"+"><h2>Hi!!!......."+myObj.FIRST_NAME+"</h2><p>Your Details...</p><table class="+"table table-condensed"+">";
 html=html+"<thead><tr><th>Student_Id</th><th>"+myObj.S_ID+"</th></tr></thead><tbody><tr><td>User_Name</td><td>"+myObj.User_Name+"</td></tr><tr><td>FirstName</td><td>"+myObj.FIRST_NAME+"</td></tr><tr><td>LastName</td>";
 html=html+"<td>"+myObj.LAST_NAME+"</td></tr><tr><td>EMAIL</td><td>"+myObj.EMAIL+"</td></tr><tr><td>ADDRESS</td><td>"+myObj.Address+"</td></tr><tr><td>DOB</td><td>"+myObj.DOB+"</td></tr><tr><td>MOBILE</td><td>"+myObj.MOBILE+"</td></tr></tbody></table></div>";
-			}	    
-
+			}
 canvas.append(html);
-		  
-		  } 
+
+		  }
 		});
 
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
@@ -160,16 +161,16 @@ canvas.append(html);
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
 
-	  
-	  
+
+
   }
- 
+
 function deleteUser(){
 	  var myJSON=null;
 	  var html="";
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
-		  "username": ""+document.getElementById('username').value+""  
+		  "username": ""+document.getElementById('username').value+""
 		});
 
 		var xhr = new XMLHttpRequest();
@@ -177,19 +178,19 @@ function deleteUser(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		   // console.log(this.responseText);
 		    dataofuser=this.responseText;
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
 		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
-		  } 
+		  }
 		});
 
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/delete");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-		
+
 }
 
 function deleteUsertable(username,password){
@@ -198,7 +199,7 @@ function deleteUsertable(username,password){
 	  var html="";
 	  var data = JSON.stringify({
 		  "password": ""+password+"",
-		  "username": ""+username+""  		
+		  "username": ""+username+""
 		  });
 
 		var xhr = new XMLHttpRequest();
@@ -206,35 +207,34 @@ function deleteUsertable(username,password){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
-		    dataofuser=this.responseText;
+		   // console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
 		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
-		  } 
+		  }
 		});
 
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/edit/delete");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-		
-	  
-	  
+
+
+
 }
 function updateUserTable(username,password){
 	hidefrom();
 	var myJSON=null;
 	  var data = JSON.stringify({
 		  "password": ""+password+"",
-		  "username": ""+username+""  
+		  "username": ""+username+""
 		});
 
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		   // console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
 		    if (myObj.Status==="UnSuccesful"){
@@ -243,22 +243,22 @@ function updateUserTable(username,password){
 			}else{
 				$("#formdisplay").show();
 		    var myObj = JSON.parse(this.responseText);
-		    document.getElementById("uusername").value = myObj.User_Name; 
-		    document.getElementById("uemail").value = myObj.EMAIL ; 
-		    document.getElementById("upassword").value = myObj.PASSWORD ; 
-		    document.getElementById("udob").value = myObj.DOB ; 
-		    document.getElementById("ufirstname").value = myObj.FIRST_NAME ; 
-		    document.getElementById("ulastname").value = myObj.LAST_NAME ; 
-		    document.getElementById("umobileno").value = myObj.MOBILE 
-		    document.getElementById("uaddress").value = myObj.Address; 
-		  } 
+		    document.getElementById("uusername").value = myObj.User_Name;
+		    document.getElementById("uemail").value = myObj.EMAIL ;
+		    document.getElementById("upassword").value = myObj.PASSWORD ;
+		    document.getElementById("udob").value = myObj.DOB ;
+		    document.getElementById("ufirstname").value = myObj.FIRST_NAME ;
+		    document.getElementById("ulastname").value = myObj.LAST_NAME ;
+		    document.getElementById("umobileno").value = myObj.MOBILE
+		    document.getElementById("uaddress").value = myObj.Address;
+		  }
 		  }
 		});
 
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
-		xhr.send(data);	
+		xhr.send(data);
 }
 
 
@@ -267,14 +267,14 @@ function udatedatainform(){
 	var myJSON=null;
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
-		  "username": ""+document.getElementById('username').value+""  
+		  "username": ""+document.getElementById('username').value+""
 		});
 
 		var xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		  //  console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
 		    if (myObj.Status==="UnSuccesful"){
@@ -283,23 +283,23 @@ function udatedatainform(){
 			}else{
 				$("#formdisplay").show();
 		    var myObj = JSON.parse(this.responseText);
-		    document.getElementById("uusername").value = myObj.User_Name; 
-		    document.getElementById("uemail").value = myObj.EMAIL ; 
-		    document.getElementById("upassword").value = myObj.PASSWORD ; 
-		    document.getElementById("udob").value = myObj.DOB ; 
-		    document.getElementById("ufirstname").value = myObj.FIRST_NAME ; 
-		    document.getElementById("ulastname").value = myObj.LAST_NAME ; 
-		    document.getElementById("umobileno").value = myObj.MOBILE 
-		    document.getElementById("uaddress").value = myObj.Address; 
-		    
-		  } 
+		    document.getElementById("uusername").value = myObj.User_Name;
+		    document.getElementById("uemail").value = myObj.EMAIL ;
+		    document.getElementById("upassword").value = myObj.PASSWORD ;
+		    document.getElementById("udob").value = myObj.DOB ;
+		    document.getElementById("ufirstname").value = myObj.FIRST_NAME ;
+		    document.getElementById("ulastname").value = myObj.LAST_NAME ;
+		    document.getElementById("umobileno").value = myObj.MOBILE
+		    document.getElementById("uaddress").value = myObj.Address;
+
+		  }
 		  }
 		});
 
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
-		xhr.send(data);	
+		xhr.send(data);
 }
 function updatedata(){
 	 var data = JSON.stringify({
@@ -308,9 +308,9 @@ function updatedata(){
 		  "dob": ""+document.getElementById('udob').value+"",
 		  "firstname": ""+document.getElementById('ufirstname').value+"",
 		  "lastname": ""+document.getElementById('ulastname').value+"",
-		  "address": ""+document.getElementById('uaddress').value+"",  
+		  "address": ""+document.getElementById('uaddress').value+"",
 		  "mobileno": ""+document.getElementById('umobileno').value+"",
-		  "username": ""+document.getElementById('uusername').value+""  
+		  "username": ""+document.getElementById('uusername').value+""
 
 
 		});
@@ -320,7 +320,7 @@ function updatedata(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		   // console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
 
@@ -331,13 +331,13 @@ function updatedata(){
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-	
+
 }
 function hidefrom(){
 	$("#formdisplay").hide();
 }
 
- 
+
  function retrivedataall(){
 	 hidefrom();
 	 var dataofuser="";
@@ -347,19 +347,16 @@ function hidefrom(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		    console.log(this.responseText);
+		   // console.log(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
+      var myObj = JSON.parse(this.responseText);
+  html="<div class="+"container"+"><h2>AllUserData</h2><hr><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th><th>DELETE</th><th>UPDATE</th></tr></thead><tbody>";
 
-		    dataofuser=this.responseText;
-		    var j = JSON.parse(dataofuser);
- html="<div class="+"container"+"><h2>AllUserData</h2><hr><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th><th>DELETE</th><th>UPDATE</th></tr></thead><tbody>";
-
-		    for (var i in j){
-html+=" <tr><td>"+j[i].FIRST_NAME+"</td><td>"+j[i].LAST_NAME+"</td><td>"+j[i].EMAIL+"@</td><td>"+j[i].S_ID+"</td><td>"+j[i].User_Name+"</td><td>"+j[i].DOB+"</td><td>"+j[i].MOBILE+"</td><td>"+j[i].Address+"</td>";
-html+="<td><input type="+"button"+" class="+"btn"+" value="+"DELETE"+" onClick="+"deleteUsertable('"+j[i].User_Name+"','"+j[i].PASSWORD+"')"+"></td>";    
-html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick="+"updateUserTable('"+j[i].User_Name+"','"+j[i].PASSWORD+"')"+"></td></tr> ";    
-		   
-		    }
+        for (var i in myObj.Data){
+html+=" <tr><td>"+myObj.Data[i].FIRST_NAME+"</td><td>"+myObj.Data[i].LAST_NAME+"</td><td>"+myObj.Data[i].EMAIL+"@</td><td>"+myObj.Data[i].S_ID+"</td><td>"+myObj.Data[i].User_Name+"</td><td>"+myObj.Data[i].DOB+"</td><td>"+myObj.Data[i].MOBILE+"</td>";
+html+="<td>"+myObj.Data[i].Address+"</td> <td><input type="+"button"+" class="+"btn"+" value="+"DELETE"+" onClick="+"deleteUsertable('"+myObj.Data[1].User_Name+"','"+myObj.Data[1].PASSWORD+"')"+"></td>";
+html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick="+"updateUserTable('"+myObj.Data[i].User_Name+"','"+myObj.Data[i].PASSWORD+"')"+"></td></tr> ";
+        }
 	    	$("#canvas1").append(html);
 		  }
 		});
@@ -367,29 +364,69 @@ html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick=
 		xhr.open("POST", "http://localhost:8080/frontHandHandle/retriveall");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
-		xhr.send(); 
-	 
-	 
+		xhr.send();
  }
- 
-  
-  
+/*
+function check(){
+	 hidefrom();
+
+	        var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+
+		  }
+		});
+
+		xhr.open("GET", "http://localhost:8080/frontHandHandle/tasks");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send();
+
+
+ }
+function check1(){
+	 hidefrom();
+     var data = JSON.stringify({
+		  "password": ""+document.getElementById('passwordretrive').value+"",
+		  "username": ""+document.getElementById('username').value+""
+		});
+
+	        var xhr = new XMLHttpRequest();
+		xhr.withCredentials = true;
+		xhr.addEventListener("readystatechange", function () {
+		  if (this.readyState === 4) {
+		    console.log(this.responseText);
+
+		  }
+		});
+
+		xhr.open("POST", "http://localhost:8080/frontHandHandle/hola");
+		xhr.setRequestHeader("content-type", "application/json");
+		xhr.setRequestHeader("cache-control", "no-cache");
+		xhr.send(data);
+
+ }*/
+
+
   </script>
  <!--  <body>
     <form class="work" action="http://localhost:8080/frontHandHandle/tasks" method="post">
       <input type="text" id="data1" name="data1" value="data1">
       <input type="text" id="data2" name="data2" value="data2">
-      
+
       <button type="submit" name="button">cdsc</button>
     <button type="button" name="button" onclick="UserAction()">Submit</button>
     <button type="button" onclick ="datamodel()"> HttpWALA</button>
     </form> -->
-    
-    
+
+
   <body >
 
   <div class="container-fulid" >
   <center>  <h1 id ="helo"> Hello Curd Operation </h1> </center>
+
     <div class="row">
       <div class="col-xs-3" style="background-color:#9acfea">
               <center>  <h3 data-value="form"class="tool button" id="Msgpass">Insert From </h3></center><hr>
@@ -409,27 +446,29 @@ html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick=
   <input type="button" class="btn btn-danger"style ="float: right" value="DELETE" onClick="deleteUser()">
   <input type="button" class="btn btn-primary"style ="float: right" id="updatebuttonshow" value="UPDATE" onClick="udatedatainform()">
     <input type="button" class="btn btn-info"style ="float: right" value="ALLDATA" onClick="retrivedataall()">
-  
-        
+<!--  <input type="button" class="btn btn-danger"style ="float: right" value="check" onClick="check()">
+  <input type="button" class="btn btn-danger"style ="float: right" value="check1" onClick="check1()">-->
+
+
         <form  class="form-horizontal" method="post">
           <br>UserName<br>  <input type="text" class="form-control" name="username"id="username" placeholder="Enter username" style="width:450px;" required>
            <br>Password<br><input type="password" class="form-control" name="passwordretrive" id="passwordretrive" placeholder="Enter password" style="width:450px;" required>
             <br>  <input type="button" onclick="retriveDataByUserName()" value ="Retrive">  </input>
             <input type="reset"  value ="ResetButton">  </input>
-            
+
           </form>
-          <div id="canvas1"> 
-          
+          <div id="canvas1">
+
           </div>
-          
+
           <div id="formdisplay" style="display:none">
             <center>  <h3 data-value="form"class="tool button" id="Msgpass">Update From </h3></center><hr>
              <form  class="form-horizontal" method="post">
               <input type="button" class="btn btn-info" onclick="hidefrom()" style ="float: right" value ="HIdeUpdateForm"> </input>
               <input type="button" class="btn btn-info" onclick="updatedata()" style ="float: right" value ="UpdateChanges"> </input><br>
-             
+
               Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;">
-               <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;">
+               <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;" disabled>
                 <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" style="width:450px;">
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
              	  <br>Firstname<br>  <input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
@@ -439,7 +478,7 @@ html+="<td><input type="+"button"+" class="+"btn"+" value="+"UPADATE"+" onClick=
                <br>
                </form>
           </div>
-          
+
       </div>
     </div>
     <footer class="footer">

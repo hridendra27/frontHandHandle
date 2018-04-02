@@ -2,6 +2,7 @@ package Dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -44,8 +45,9 @@ public HashMap<String,Object> retriveUserNameIdAndPassword(HashMap<String,Object
 		
 		try {
 		  String sql = retrivequery.retriveByUserNameAndPassword (param,"studentmain" );
-			  jdbcTemplate.queryForList(sql);
-			  return (HashMap<String, Object>) jdbcTemplate.queryForMap(sql);
+			 // jdbcTemplate.queryForList(sql);
+		HashMap m1=new HashMap<String,Object>  (jdbcTemplate.queryForMap(sql));
+			  return m1;
 
 		} catch (DataAccessException e) {
 			e.printStackTrace();
