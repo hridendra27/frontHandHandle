@@ -10,6 +10,7 @@
 
 
 
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -469,62 +470,94 @@ function formvalidation(email,password,mobileno,firstname,dob){
   document.getElementById('mobileno').style.borderColor = "#ccc";
   document.getElementById('dob').style.borderColor = "#ccc";
   if(email=== "") {
-        alert("Error: Please Inter Email");
+      //  alert("Error: Please Inter Email");
         document.getElementById('email').style.borderColor = "red";
+        document.getElementById("semail").innerHTML="Error: Please Inter Email";
+        $("#semail").show();
+        $("#semail").fadeOut(5000);
+
         return false;
       }
     //Email form validation
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if(!email.match(mailformat))
       {
-        alert("You have entered an invalid email address!");
+        document.getElementById('email').style.borderColor = "red";
+        //alert("You have entered an invalid email address!");
+        document.getElementById("semail").innerHTML="Error:You have entered an invalid email address!";
+        $("#semail").show();
+        $("#semail").fadeOut(5000);
         return false;
       }
 
   if(password=== "") {
-        alert("Error: Please Inter password ");
+      //  alert("Error: Please Inter password ");
         document.getElementById('password').style.borderColor = "red";
+        document.getElementById("spassword").innerHTML="Error: Please Inter password";
+        $("#spassword").show();
+        $("#spassword").fadeOut(5000);
         return false;
       }
       //Password Validation
   var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   if(!password.match(pass))
    {
-     alert("Not a valid Password");
+     document.getElementById('password').style.borderColor = "red";
+     //alert("Not a valid Password");
+     document.getElementById("spassword").innerHTML="Not a valid Password";
+     $("#spassword").show();
+     $("#spassword").fadeOut(5000);
      return false;
     }
 
 
   if(dob=== "") {
-        alert("Error: Please Inter DateOfBirth ");
+      //  alert("Error: Please Inter DateOfBirth ");
         document.getElementById('dob').style.borderColor = "red";
+        document.getElementById("sdob").innerHTML="Error: Please enter DateOfBirth";
+        $("#sdob").show();
+        $("#sdob").fadeOut(5000);
         return false;
       }
 
 
   if(firstname=== "") {
-          alert("Error: Please Inter Firstname");
+        //  alert("Error: Please Inter Firstname");
           document.getElementById('firstname').style.borderColor = "red";
+          document.getElementById("sfirstname").innerHTML="Error: Please enter  Firstname";
+          $("#sfirstname").show();
+          $("#sfirstname").fadeOut(5000);
           return false;
         }
         // Name Validation
       var na = /^[A-Za-z ]+$/;
     if(!firstname.match(na))
        {
-         alert("Plese Enter Valid name Numbers Not Allowed");
+         document.getElementById('firstname').style.borderColor = "red";
+         //alert("Plese Enter Valid name Numbers Not Allowed");
+         document.getElementById("sfirstname").innerHTML="Plese Enter Valid name Numbers Not Allowed";
+         $("#sfirstname").show();
+         $("#sfirstname").fadeOut(5000);
          return false;
         }
 
   if(mobileno=== "") {
-          alert("Error: Please Inter mobileno ");
+        //  alert("Error: Please Inter mobileno ");
           document.getElementById('mobileno').style.borderColor = "red";
+          document.getElementById("smobile").innerHTML="Error: Please Inter mobileno";
+          $("#smobile").show();
+          $("#smobile").fadeOut(5000);
           return false;
         }
       //Phone no Validation
     var phoneno = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
   if(!mobileno.match(phoneno))
      {
-       alert("Not a valid Phone Number");
+       document.getElementById('mobileno').style.borderColor = "red";
+    //   alert("Not a valid Phone Number");
+       document.getElementById("smobile").innerHTML="Not a valid Phone Number";
+       $("#smobile").show();
+       $("#smobile").fadeOut(5000);
        return false;
       }
 
@@ -552,14 +585,20 @@ function formvalidation(email,password,mobileno,firstname,dob){
       <div class="col-xs-3" style="background-color:#9acfea">
               <center>  <h3 data-value="form"class="tool button" id="Msgpass">Insert From </h3></center><hr>
              <form  class="form-horizontal" method="post">
-               Email<br><input type="email" class="form-control" name="email" id="email" required  placeholder="We'll never share your email with anyone else" style="width:350px;" >
+                Email<br><input type="email" class="form-control" name="email" id="email" required  placeholder="We'll never share your email with anyone else" style="width:350px;" >
+                <span hidden id="semail"  style ="color:red"> </span>
                 <br>Password<br><input type="password" class="form-control" name="password" id="password"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required placeholder="Enter password" style="width:350px;" >
+                <span hidden id="spassword"  style ="color:red"> </span>
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" required style="width:350px">
-             	  <br>Firstname<br>  <input type="text" class="form-control" name="firstname"id="firstname" required placeholder="Enter firstname" style="width:350px;">
-                 <br>Lastname <br>  <input type="text" class="form-control"name="lastname" id="lastname" required placeholder="Enter lastname" style="width:350px;">
-                 <br>mobileno<br>   <input type="text" class="form-control"name="mobileno" id="mobileno" pattern="([0|\+[0-9]{1,5})?([7-9][0-9]{9})" required placeholder="Enter mobileno" style="width:350px;">
-                 <br>Address  <br>  <textarea class="form-control" rows="3" name="address"id="address" style="width:350px;"></textarea>
-                 <br>  <input type="button" onclick="dataModel()" value ="Register"> </input>
+                <span hidden id="sdob"  style ="color:red"> </span>
+                <br>Firstname<br><input type="text" class="form-control" name="firstname"id="firstname" required placeholder="Enter firstname" style="width:350px;">
+                <span hidden id="sfirstname"  style ="color:red"> </span>
+                 <br>Lastname <br><input type="text" class="form-control"name="lastname" id="lastname" required placeholder="Enter lastname" style="width:350px;">
+                 <span hidden id="slastname"  style ="color:red"> </span>
+                 <br>mobileno<br><input type="text" class="form-control"name="mobileno" id="mobileno" pattern="([0|\+[0-9]{1,5})?([7-9][0-9]{9})" required placeholder="Enter mobileno" style="width:350px;">
+                 <span hidden id="smobile"  style ="color:red"> </span>
+                 <br>Address  <br><textarea class="form-control" rows="3" name="address"id="address" style="width:350px;"></textarea>
+                 <br><input type="button" onclick="dataModel()" value ="Register"> </input>
                </form>
       </div>
       <div class="col-xs-9" id="canvas" style="background-color:lightslategrey" >
@@ -575,7 +614,7 @@ function formvalidation(email,password,mobileno,firstname,dob){
           <br>UserName<br>  <input type="text" class="form-control" name="username"id="username" placeholder="Enter username" style="width:450px;" required>
            <br>Password<br><input type="password" class="form-control" name="passwordretrive" id="passwordretrive"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required  placeholder="Enter password" style="width:450px;" required>
             <br>  <input type="button" onclick="retriveDataByUserName()" value ="Retrive">  </input>
-            <input type="reset"  value ="ResetButton">  </input>
+            <input type="reset"  value ="ResetButton"></input>
 
           </form>
           <div id="canvas1">
@@ -591,10 +630,10 @@ function formvalidation(email,password,mobileno,firstname,dob){
                <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;" disabled>
                 <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required  style="width:450px;">
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
-             	  <br>Firstname<br>  <input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
-                 <br>Lastname <br>  <input type="text" class="form-control"name="ulastname" id="ulastname"  style="width:450px;">
-                 <br>mobileno<br>   <input type="text" class="form-control"name="umobileno" id="umobileno" style="width:450px;">
-                 <br>Address  <br>  <textarea class="form-control" rows="2" name="uaddress"id="uaddress" style="width:450px;"></textarea>
+             	  <br>Firstname<br><input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
+                 <br>Lastname <br><input type="text" class="form-control"name="ulastname" id="ulastname"  style="width:450px;">
+                 <br>mobileno<br><input type="text" class="form-control"name="umobileno" id="umobileno" style="width:450px;">
+                 <br>Address<br><textarea class="form-control" rows="2" name="uaddress"id="uaddress" style="width:450px;"></textarea>
                <br>
                </form>
           </div>
