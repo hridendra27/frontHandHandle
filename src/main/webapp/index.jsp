@@ -89,7 +89,7 @@
     xhr.withCredentials = true;
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-    //      console.log(this.responseText);
+          console.log(this.responseText);
         }
       });
     xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/tasks");
@@ -107,8 +107,7 @@
   var firstname=document.getElementById('firstname').value;
   var mobileno=document.getElementById('mobileno').value;
   var dob=document.getElementById('dob').value;
-
-var res= formvalidation(email,password,mobileno,firstname,dob) ;
+var res= formvalidation(email,password,mobileno,firstname,dob,"",'s') ;
 console.log(res);
 
 	  var data = JSON.stringify({
@@ -128,7 +127,9 @@ console.log(res);
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
 		  console.log(this.responseText);
+		  
 		    var myObj = JSON.parse(this.responseText);
+		    console.log (myObj.USER_NAME);
 			if (myObj.Message==="You are successfully Resgistered"){
 			document.getElementById("Msgpass").innerHTML="Thanks for Register! <br> <center><p>Your User Name:"+myObj.USER_NAME+" </p> </center>";
 		  }else{
@@ -149,10 +150,14 @@ console.log(res);
   }
 function retriveDataByUserName(){
 	hidefrom();
+	userActionAny();
 	  var dataofuser="";
 	  var myJSON=null;
 	  var html="";
 	  var canvas=$("#canvas1");
+	  var password=document.getElementById('passwordretrive').value;
+	  var username=document.getElementById('username').value;
+		  
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
 		  "username": ""+document.getElementById('username').value+""
@@ -163,7 +168,7 @@ function retriveDataByUserName(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		 //   console.log(this.responseText);
+		    console.log(this.responseText);
 		    dataofuser=this.responseText;
 
 		    var myObj = JSON.parse(this.responseText);
@@ -183,15 +188,27 @@ canvas.append(html);
 
 		  }
 		});
+		
+		if(username=== "") {
+		      alert("Error: Please Enter UserName ");
+		        document.getElementById('username').style.borderColor = "red";
+		      }
+		
+		else if(password=== "") {
+		      alert("Error: Please Enter password ");
+		        document.getElementById('passwordretrive').style.borderColor = "red";
+		      }else{
 
 		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
+		      }
   }
 
 function deleteUser(){
 	  var myJSON=null;
+	  userActionAny();
 	  var html="";
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
@@ -203,7 +220,7 @@ function deleteUser(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		   // console.log(this.responseText);
+		   console.log(this.responseText);
 		    dataofuser=this.responseText;
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
@@ -223,6 +240,7 @@ function deleteUser(){
 
 function deleteUsertable(username,password){
 	hidefrom();
+	userActionAny();
 	  var myJSON=null;
 	  var html="";
 	  var data = JSON.stringify({
@@ -235,7 +253,7 @@ function deleteUsertable(username,password){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		   // console.log(this.responseText);
+		    console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 		  // myJSON= JSON.stringify(this.responseText);
 
@@ -256,6 +274,7 @@ function deleteUsertable(username,password){
 }
 function updateUserTable(username,password){
 	hidefrom();
+	userActionAny();
 	var myJSON=null;
 	  var data = JSON.stringify({
 		  "password": ""+password+"",
@@ -266,7 +285,7 @@ function updateUserTable(username,password){
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		   // console.log(this.responseText);
+		    console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
 		    if (myObj.Status==="UnSuccesful"){
@@ -296,7 +315,12 @@ function updateUserTable(username,password){
 
 
 function udatedatainform(){
+	userActionAny();
 	var myJSON=null;
+	var password=document.getElementById('passwordretrive').value;
+	var username=document.getElementById('username').value;
+	  
+	
 	  var data = JSON.stringify({
 		  "password": ""+document.getElementById('passwordretrive').value+"",
 		  "username": ""+document.getElementById('username').value+""
@@ -306,7 +330,7 @@ function udatedatainform(){
 		xhr.withCredentials = true;
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		  //  console.log(this.responseText);
+		    console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
 		    if (myObj.Status==="UnSuccesful"){
@@ -327,22 +351,29 @@ function udatedatainform(){
 		  }
 		  }
 		});
-
+		if(username=== "") {
+		      alert("Error: Please Enter UserName ");
+		        document.getElementById('username').style.borderColor = "red";
+		      }
+		
+		else if(password=== "") {
+		      alert("Error: Please Enter password ");
+		        document.getElementById('passwordretrive').style.borderColor = "red";
+		      }else{
 		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/retrivebyusername");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
+		      }
 }
 function updatedata(){
+	userActionAny();
   var email=document.getElementById('uemail').value;
   var password=document.getElementById('upassword').value;
   var firstname=document.getElementById('ufirstname').value;
   var mobileno=document.getElementById('umobileno').value;
   var dob=document.getElementById('udob').value;
-
-  var res= formvalidation(email,password,mobileno,firstname,dob) ;
-  console.log(res);
-
+  var res= formvalidation(email,password,mobileno,firstname,dob,'u','si') ;
 	 var data = JSON.stringify({
 		  "email": ""+document.getElementById('uemail').value+"",
 		  "password": ""+document.getElementById('upassword').value+"",
@@ -359,20 +390,26 @@ function updatedata(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		   // console.log(this.responseText);
+		    console.log(this.responseText);
 		    var myObj = JSON.parse(this.responseText);
 		    alert("Status :"+myObj.Status+"\n"+myObj.Message);
 
 		  }
 		});
-    if (res===false){
-console.log("You Have Enter not Valid Entity");
-    }else{
+		 if (res===false){
+		      document.getElementById("Errorr").innerHTML="<b>Sorry You are not Updated Please Enter Valid Data !</b> "  ;
+		        $("#Errorr").show();
+		      $("#Errorr").fadeOut(3500);
+
+
+		    }else{
+    
 		xhr.open("POST", "http://192.168.0.171:8080/frontHandHandle/edit/update");
 		xhr.setRequestHeader("content-type", "application/json");
 		xhr.setRequestHeader("cache-control", "no-cache");
 		xhr.send(data);
-}
+		    }
+
 }
 function hidefrom(){
 	$("#formdisplay").hide();
@@ -380,6 +417,7 @@ function hidefrom(){
 
 
  function retrivedataall(){
+	 userActionAny();
 	 hidefrom();
 	 var dataofuser="";
 	 html="";
@@ -388,7 +426,7 @@ function hidefrom(){
 
 		xhr.addEventListener("readystatechange", function () {
 		  if (this.readyState === 4) {
-		   // console.log(this.responseText);
+		    console.log(this.responseText);
 			document.getElementById("canvas1").innerHTML="";
       var myObj = JSON.parse(this.responseText);
   html="<div class="+"container"+"><h2>AllUserData</h2><table class="+"table table-condensed"+"><table class="+"table"+"><thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>SId</th><th>User_Name</th><th>DOB</th><th>MOBILE</th><th>Address</th><th>DELETE</th><th>UPDATE</th></tr></thead><tbody>";
@@ -463,18 +501,14 @@ function passwordvalidation(){
      return true;
    }
 }*/
-function formvalidation(email,password,mobileno,firstname,dob){
-  document.getElementById('email').style.borderColor = "#ccc";
-  document.getElementById('password').style.borderColor = "#ccc";
-  document.getElementById('firstname').style.borderColor = "#ccc";
-  document.getElementById('mobileno').style.borderColor = "#ccc";
-  document.getElementById('dob').style.borderColor = "#ccc";
+function formvalidation(email,password,mobileno,firstname,dob,divv,di){
+	userActionAny();
   if(email=== "") {
       //  alert("Error: Please Inter Email");
-        document.getElementById('email').style.borderColor = "red";
-        document.getElementById("semail").innerHTML="Error: Please Inter Email";
-        $("#semail").show();
-        $("#semail").fadeOut(5000);
+        document.getElementById(""+divv+"email").style.borderColor = "red";
+        document.getElementById(""+di+"email").innerHTML="Error: Please Inter Email";
+        $("#"+di+"email").show();
+        $("#"+di+"email").fadeOut(5000);
 
         return false;
       }
@@ -482,87 +516,103 @@ function formvalidation(email,password,mobileno,firstname,dob){
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if(!email.match(mailformat))
       {
-        document.getElementById('email').style.borderColor = "red";
+        document.getElementById(""+divv+"email").style.borderColor = "red";
         //alert("You have entered an invalid email address!");
-        document.getElementById("semail").innerHTML="Error:You have entered an invalid email address!";
-        $("#semail").show();
-        $("#semail").fadeOut(5000);
+        document.getElementById(""+di+"email").innerHTML="Error:You have entered an invalid email address!";
+        $("#"+di+"email").show();
+        $("#"+di+"email").fadeOut(5000);
         return false;
       }
 
   if(password=== "") {
       //  alert("Error: Please Inter password ");
-        document.getElementById('password').style.borderColor = "red";
-        document.getElementById("spassword").innerHTML="Error: Please Inter password";
-        $("#spassword").show();
-        $("#spassword").fadeOut(5000);
+        document.getElementById(""+divv+"password").style.borderColor = "red";
+        document.getElementById(""+di+"password").innerHTML="Error: Please Inter password";
+        $("#"+di+"password").show();
+        $("#"+di+"password").fadeOut(5000);
         return false;
       }
       //Password Validation
   var pass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
   if(!password.match(pass))
    {
-     document.getElementById('password').style.borderColor = "red";
+     document.getElementById(""+divv+"password").style.borderColor = "red";
      //alert("Not a valid Password");
-     document.getElementById("spassword").innerHTML="Not a valid Password";
-     $("#spassword").show();
-     $("#spassword").fadeOut(5000);
+     document.getElementById(""+di+"password").innerHTML="Not a valid Password";
+     $("#"+di+"password").show();
+     $("#"+di+"password").fadeOut(5000);
      return false;
     }
 
 
   if(dob=== "") {
       //  alert("Error: Please Inter DateOfBirth ");
-        document.getElementById('dob').style.borderColor = "red";
-        document.getElementById("sdob").innerHTML="Error: Please enter DateOfBirth";
-        $("#sdob").show();
-        $("#sdob").fadeOut(5000);
+        document.getElementById(""+divv+"dob").style.borderColor = "red";
+        document.getElementById(""+di+"dob").innerHTML="Error: Please enter DateOfBirth";
+        $("#"+di+"dob").show();
+        $("#"+di+"dob").fadeOut(5000);
         return false;
       }
 
 
   if(firstname=== "") {
         //  alert("Error: Please Inter Firstname");
-          document.getElementById('firstname').style.borderColor = "red";
-          document.getElementById("sfirstname").innerHTML="Error: Please enter  Firstname";
-          $("#sfirstname").show();
-          $("#sfirstname").fadeOut(5000);
+          document.getElementById(""+divv+"firstname").style.borderColor = "red";
+          document.getElementById(""+di+"firstname").innerHTML="Error: Please enter  Firstname";
+          $("#"+di+"firstname").show();
+          $("#"+di+"firstname").fadeOut(5000);
           return false;
         }
         // Name Validation
       var na = /^[A-Za-z ]+$/;
     if(!firstname.match(na))
        {
-         document.getElementById('firstname').style.borderColor = "red";
+         document.getElementById(""+divv+"firstname").style.borderColor = "red";
          //alert("Plese Enter Valid name Numbers Not Allowed");
-         document.getElementById("sfirstname").innerHTML="Plese Enter Valid name Numbers Not Allowed";
-         $("#sfirstname").show();
-         $("#sfirstname").fadeOut(5000);
+         document.getElementById(""+di+"firstname").innerHTML="Plese Enter Valid name Numbers Not Allowed";
+         $("#"+di+"firstname").show();
+         $("#"+di+"firstname").fadeOut(5000);
          return false;
         }
 
   if(mobileno=== "") {
         //  alert("Error: Please Inter mobileno ");
-          document.getElementById('mobileno').style.borderColor = "red";
-          document.getElementById("smobile").innerHTML="Error: Please Inter mobileno";
-          $("#smobile").show();
-          $("#smobile").fadeOut(5000);
+          document.getElementById(""+divv+"mobileno").style.borderColor = "red";
+          document.getElementById(""+di+"mobileno").innerHTML="Error: Please Inter mobileno";
+          $("#"+di+"mobileno").show();
+          $("#"+di+"mobileno").fadeOut(5000);
           return false;
         }
       //Phone no Validation
     var phoneno = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
   if(!mobileno.match(phoneno))
      {
-       document.getElementById('mobileno').style.borderColor = "red";
+       document.getElementById(""+divv+"mobileno").style.borderColor = "red";
     //   alert("Not a valid Phone Number");
-       document.getElementById("smobile").innerHTML="Not a valid Phone Number";
-       $("#smobile").show();
-       $("#smobile").fadeOut(5000);
+       document.getElementById(""+di+"mobileno").innerHTML="Not a valid Phone Number";
+       $("#"+di+"mobileno").show();
+       $("#"+di+"mobileno").fadeOut(5000);
        return false;
       }
 
     return true;
 
+}
+function userActionAny(){
+	  document.getElementById('email').style.borderColor = "#ccc";
+	  document.getElementById('password').style.borderColor = "#ccc";
+	  document.getElementById('firstname').style.borderColor = "#ccc";
+	  document.getElementById('mobileno').style.borderColor = "#ccc";
+	  document.getElementById('dob').style.borderColor = "#ccc";
+	  document.getElementById('passwordretrive').style.borderColor = "#ccc";
+	  document.getElementById('username').style.borderColor = "#ccc";
+	  document.getElementById('uemail').style.borderColor = "#ccc";
+	  document.getElementById('upassword').style.borderColor = "#ccc";
+	  document.getElementById('ufirstname').style.borderColor = "#ccc";
+	  document.getElementById('umobileno').style.borderColor = "#ccc";
+	  document.getElementById('udob').style.borderColor = "#ccc";
+	  document.getElementById('uusername').style.borderColor = "#ccc";
+	
 }
   </script>
  <!--  <body>
@@ -587,16 +637,16 @@ function formvalidation(email,password,mobileno,firstname,dob){
              <form  class="form-horizontal" method="post">
                 Email<br><input type="email" class="form-control" name="email" id="email" required  placeholder="We'll never share your email with anyone else" style="width:350px;" >
                 <span hidden id="semail"  style ="color:red"> </span>
-                <br>Password<br><input type="password" class="form-control" name="password" id="password"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required placeholder="Enter password" style="width:350px;" >
+                <br>Password<br><input type="password" class="form-control" name="password" id="password"   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required placeholder="Contains one Capital, Number and Special Character" style="width:350px;" >
                 <span hidden id="spassword"  style ="color:red"> </span>
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="dob" id ="dob" required style="width:350px">
                 <span hidden id="sdob"  style ="color:red"> </span>
-                <br>Firstname<br><input type="text" class="form-control" name="firstname"id="firstname" required placeholder="Enter firstname" style="width:350px;">
+                <br>Firstname<br><input type="text" class="form-control" name="firstname"id="firstname" pattern="[A-Za-z ]+" required placeholder="Numbers Not Allowed" style="width:350px;">
                 <span hidden id="sfirstname"  style ="color:red"> </span>
                  <br>Lastname <br><input type="text" class="form-control"name="lastname" id="lastname" required placeholder="Enter lastname" style="width:350px;">
                  <span hidden id="slastname"  style ="color:red"> </span>
-                 <br>mobileno<br><input type="text" class="form-control"name="mobileno" id="mobileno" pattern="([0|\+[0-9]{1,5})?([7-9][0-9]{9})" required placeholder="Enter mobileno" style="width:350px;">
-                 <span hidden id="smobile"  style ="color:red"> </span>
+                 <br>mobileno<br><input type="text" class="form-control"name="mobileno" id="mobileno" pattern="([0|\+[0-9]{1,5})?([7-9][0-9]{9})" required placeholder="Country code allowed"style="width:350px;">
+                 <span hidden id="smobileno"  style ="color:red"> </span>
                  <br>Address  <br><textarea class="form-control" rows="3" name="address"id="address" style="width:350px;"></textarea>
                  <br><input type="button" onclick="dataModel()" value ="Register"> </input>
                </form>
@@ -621,18 +671,23 @@ function formvalidation(email,password,mobileno,firstname,dob){
           </div>
 
           <div id="formdisplay" style="display:none">
-            <center>  <h3 data-value="form"class="tool button" id="Msgpass">Update From </h3></center><hr>
+            <center>  <h3 data-value="form"class="tool button" id="Msgpass">Update From </h3></center><hr><span id="Errorr"></span>
              <form  class="form-horizontal" method="post">
               <input type="button" class="btn btn-info" onclick="hidefrom()" style ="float: right" value ="HIdeUpdateForm"> </input>
               <input type="button" class="btn btn-info" onclick="updatedata()" style ="float: right" value ="UpdateChanges"> </input><br>
-
-              Email<br><input type="email" class="form-control" name="uemail" id="uemail"  style="width:450px;" >
-               <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;" disabled>
-                <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required  style="width:450px;">
+              Email<br><input type="email" class="form-control" name="uemail" id="uemail" required  placeholder="We'll never share your email with anyone else"   style="width:450px;" >
+               <span hidden id="siemail"  style ="color:red"> </span>
+               <br>USERNAME<br><input type="text" class="form-control" name="uusername" id="uusername" style="width:450px;" disabled>            
+                <br>Password<br><input type="password" class="form-control" name="upassword" id="upassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required placeholder="Must Contains one Capital, Number and Special Character"  style="width:450px;">
+                <span hidden id="sipassword"  style ="color:red"> </span>          
                 <br>DateOfBirth<br><input type="date" class ="form-control"name="udob" id ="udob" style="width:450px" >
-             	  <br>Firstname<br><input type="text" class="form-control" name="ufirstname"id="ufirstname" style="width:450px;">
+                <span hidden id="sidob"  style ="color:red"> </span>
+             	 <br>Firstname<br><input type="text" class="form-control" name="ufirstname"id="ufirstname" pattern="[A-Za-z ]+" required placeholder="Numbers Not Allowed" style="width:450px;">
+                   <span hidden id="sifirstname"  style ="color:red"> </span>
                  <br>Lastname <br><input type="text" class="form-control"name="ulastname" id="ulastname"  style="width:450px;">
-                 <br>mobileno<br><input type="text" class="form-control"name="umobileno" id="umobileno" style="width:450px;">
+                 <span hidden id="silastname"  style ="color:red"> </span>
+                 <br>mobileno<br><input type="text" class="form-control"name="umobileno" id="umobileno" pattern="([0|\+[0-9]{1,5})?([7-9][0-9]{9})" required placeholder="Country code allowed" style="width:450px;">
+                <span hidden id="simobileno"  style ="color:red"> </span>
                  <br>Address<br><textarea class="form-control" rows="2" name="uaddress"id="uaddress" style="width:450px;"></textarea>
                <br>
                </form>

@@ -28,7 +28,7 @@ public class AppController {
 	
 	DataServices cs=new DataServices();
 	
-    @RequestMapping(value="/tasks",method = RequestMethod.GET,headers="Accept=application/json")	
+    @RequestMapping(value="/tasks",method = RequestMethod.POST,headers="Accept=application/json")	
 public @ResponseBody HashMap<String,Object> apps (){
 	HashMap <String,Object> hm =new HashMap<String,Object>(  );
 	hm.put("Hello", "World");
@@ -42,7 +42,7 @@ public @ResponseBody HashMap<String,Object> apps (){
     	HashMap <String,Object> hm =new HashMap<String,Object>(  );
     	hm.put("Hello", "World");
     	System.out.println(dm.getUsername());
-    	
+    	hm.put("Frist_Name", dm.getFirstname());
     	System.out.println(hm);
     		return hm;
     		
@@ -66,6 +66,42 @@ public @ResponseBody HashMap<String,Object> apps (){
     
     @RequestMapping(value="/datamodel",method = RequestMethod.POST,headers="Accept=application/json")	
     public @ResponseBody HashMap<String,Object> modelsetting (@RequestBody DataModel dm){
+    	HashMap<String,Object> hash=new HashMap<String, Object>();
+		
+		//Random UserName
+    	dm.setUsername(ValidationData.userNameGenration(dm.getFirstname(),dm.getLastname()) );
+		//Password Validation 
+	    hash.put("Password",((ValidationData.passwordValidation (dm.getPassword()))) );
+	   
+	    //Mobile Validation
+	    hash.put("Mobile",(ValidationData.mobileNoValidation (dm.getMobileno())));
+	    
+	    // Email Validation 
+	    hash.put("Eamil",(ValidationData.emailValidation(dm.getEmail())));
+	    
+	    // Call Service
+	    try {
+			if (hash.get("Password").equals("Strong")&&(hash.get("Mobile").equals("true")&& hash.get("Eamil").equals("true"))) {
+				String s= cs.addDataService(dm);
+				hash.put("Message",s);
+				hash.put("USER_NAME",dm.getUsername());
+				if (s==ValidationData.SRN)
+				{
+					hash.put("Satatus", "UnSuccessful");
+					hash.put ("message 1","User Exist");
+				}
+			}else {
+				hash.put("Status","Error");
+				hash.put("Message",ValidationData.ERROR);
+			}
+			} catch (Exception e) {
+				System.out.println(e);			
+				e.printStackTrace();
+			}
+	    	return hash;
+	}
+    @RequestMapping(value="/datamodel1",method = RequestMethod.POST,headers="Accept=application/json")	
+    public @ResponseBody HashMap<String,Object> modelsetting1 (@RequestBody DataModel dm){
     	HashMap<String,Object> hash=new HashMap<String, Object>();
 		
 		//Random UserName

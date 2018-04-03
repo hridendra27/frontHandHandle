@@ -15,7 +15,7 @@ public class UpdateQuery {
         query=query.substring(0, query.length()-1);
         query=query+query1;
 		
-		System.out.println(query);
+		//System.out.println(query);
 		return query;
 		
 		//UPDATE `login`.`USER` SET `FIRST_NAME`='dcd', `USER_NAME`='reer' WHERE `USER_ID`='1';
