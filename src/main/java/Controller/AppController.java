@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import Lib_Query.*;
 import Model.DataModel;
 import Services.DataServices;
+import redis.clients.jedis.Jedis;
 
 @CrossOrigin(origins="*")
 @RestController
@@ -246,6 +247,18 @@ public @ResponseBody HashMap<String,Object> apps (){
  			}
  			return hash;
  		}
+ 	// Redis Hit 
+ 	 		@RequestMapping ("/redishit")
+ 	 		public @ResponseBody HashMap<String,Object> redisHit(){
+ 	 			HashMap<String,Object> hash=new HashMap<String, Object>();
+ 	 			Jedis jj=new Jedis("localhost");
+ 	 			System.out.println("Server ping"+jj.ping());
+ 	 			jj.set("Sname", "Hridendra Kumar Shrivastava");
+ 	 			hash.put("Server Ping", jj.ping());
+ 	 			hash.put("KeyAvailableinRedis", jj.keys("*"));
+ 	 			return hash;
+ 	 		}
+
 }
 
 
