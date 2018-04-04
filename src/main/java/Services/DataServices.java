@@ -8,12 +8,14 @@ import org.springframework.context.ApplicationContext;
 
 	import Dao.DataDao;
 	import Model.DataModel;
+import redis.clients.jedis.Jedis;
 
 public class DataServices {
 
 	private ApplicationContext ctx= new ClassPathXmlApplicationContext("ApplicationContext.xml");
 	
 		DataDao dao =(DataDao)ctx.getBean("dao");
+		Jedis jj;
 //		@Autowired
 //		DataDao dao;
 		// Registration Service
@@ -87,6 +89,7 @@ public class DataServices {
 		
 		public ArrayList <String> dataRetrivalUser () {
 			ArrayList<String> m1= new  ArrayList <String> (dao.userDataRetrivalAll());
+			jj.set("Name111", "Hri111");
 			return m1;
 		}
 }

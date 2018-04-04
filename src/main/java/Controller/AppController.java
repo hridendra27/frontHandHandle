@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,9 @@ import redis.clients.jedis.Jedis;
 public class AppController {
 	
 	DataServices cs=new DataServices();
+	@Autowired
+	Jedis jj=new Jedis("localhost");
+
 	
     @RequestMapping(value="/tasks",method = RequestMethod.POST,headers="Accept=application/json")	
 public @ResponseBody HashMap<String,Object> apps (){
@@ -251,7 +255,6 @@ public @ResponseBody HashMap<String,Object> apps (){
  	 		@RequestMapping ("/redishit")
  	 		public @ResponseBody HashMap<String,Object> redisHit(){
  	 			HashMap<String,Object> hash=new HashMap<String, Object>();
- 	 			Jedis jj=new Jedis("localhost");
  	 			System.out.println("Server ping"+jj.ping());
  	 			jj.set("Sname", "Hridendra Kumar Shrivastava");
  	 			hash.put("Server Ping", jj.ping());
